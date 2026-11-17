@@ -141,3 +141,7 @@ If this saved you from shipping another flat-fade video, **[star it](https://git
 ---
 
 Made by [@haidrrrry](https://github.com/haidrrrry) · Follow [@haidercodes](https://instagram.com/haidercodes) for AI + dev content
+
+## 🇰🇿 Nurserik Studio Hook (рилс / таргет-креатив 9:16)
+
+A second skill lives in [`nurserik-studio-hook/`](nurserik-studio-hook/README.md): talking-head vertical Reels / ad creatives (Kazakh & Russian) built with HTML + headless Chrome + ffmpeg — captions above the head, bottom-of-frame lists, full-screen color inserts, two ending variants, and a BEFORE/AFTER video. See its [README](nurserik-studio-hook/README.md).

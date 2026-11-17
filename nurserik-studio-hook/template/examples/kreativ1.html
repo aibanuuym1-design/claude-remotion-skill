@@ -1,0 +1,225 @@
+<!doctype html>
+<!-- Nurserik Studio Hook — пример из обучения Нұрсерік: так Нұрсерік смонтировал свой креатив (PROXIMA). -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .pixw { font: 400 112px Mono; color: #e9e9e9; }
+  .pixacc { font: 700 124px Mono; color: #DFFF1F; }
+  .input { left: 90px; top: 830px; width: 900px; height: 150px; border-radius: 44px; background: #fff;
+    box-shadow: 0 30px 80px rgba(0,0,0,.14), 0 0 0 2px #e6e6e3; }
+  .input .ph2 { position: absolute; left: 48px; top: 48px; font: 400 44px Mono; color: #222; letter-spacing: -2px; white-space: nowrap; }
+  .send { width: 104px; height: 104px; border-radius: 50%; background: #111; display: grid; place-items: center; }
+  .ring { border-radius: 50%; border: 22px solid rgba(255,255,255,.35); box-shadow: 0 0 80px rgba(255,255,255,.35), inset 0 0 60px rgba(255,255,255,.25); }
+  .coin { font: 800 250px Inter; color: #fff; text-shadow: 0 10px 50px rgba(0,0,0,.25); }
+  .chev { width: 70px; height: 70px; border-right: 16px solid var(--acc); border-bottom: 16px solid var(--acc); rotate: 45deg; border-radius: 6px; }
+</style></head>
+<body data-frames="1115" data-dur="38.70" data-ty="300">
+<svg width="0" height="0" style="position:absolute"><defs>
+  <g id="star" fill="#D97757"><path id="ray" d="M-4 -4 L-6 -44 Q0 -48 6 -44 L4 -4 Z"/>
+    <use href="#ray" transform="rotate(36)"/><use href="#ray" transform="rotate(72)"/><use href="#ray" transform="rotate(108)"/><use href="#ray" transform="rotate(144)"/>
+    <use href="#ray" transform="rotate(180)"/><use href="#ray" transform="rotate(216)"/><use href="#ray" transform="rotate(252)"/><use href="#ray" transform="rotate(288)"/><use href="#ray" transform="rotate(324)"/></g>
+</defs></svg>
+<div id="stage">
+  <img id="ext"><div id="cam" class="cam"><img id="vid"></div><div id="behind"></div><div id="camc" class="cam"><img id="cut"></div>
+  <div id="shade"></div>
+
+  <!-- 1. YouTube-тағы 1 сағаттық подкаст · чуть-чуть скучный жерлері бар + окно YouTube снизу -->
+  <section class="scene" data-s="0" data-e="1.0" data-cam="1" data-cy="30">
+    <div class="small cx" style="top:236px" data-in="0.02" data-fx="words" data-w="0.02 0.2">мен мына</div>
+    <div class="big cx bh" style="top:282px" data-in="0.36" data-fx="squash" data-sfx="thud" data-vol="0.2">YouTube<span class="dot">.</span></div>
+    <div class="x" style="left:90px;top:560px" data-in="0.3" data-fx="pop" data-spin="40" data-sfx="pop"></div>
+  </section>
+
+  <section class="scene full bg-pink" data-s="1.0" data-e="2.70" data-push="0.04">
+    <div class="glow" style="left:-120px;top:380px;width:900px;height:900px;--acc:#ff8fb8" data-in="0" data-fx="blur" data-float="14"></div>
+    <div class="glow" style="left:380px;top:900px;width:800px;height:800px;--acc:#ffc2d9" data-in="0" data-fx="blur" data-float="10"></div>
+    <div class="tag" style="left:390px;top:300px;background:#ff2d6f;color:#fff" data-in="0.1" data-fx="pop" data-rot="-6" data-sfx="pop">1 сағаттық</div>
+    <div class="big ink cx" style="top:380px" data-in="0.66" data-fx="squash" data-sfx="thud" data-vol="0.2">подкаст<span class="dot" style="color:#ff2d6f;-webkit-text-fill-color:#ff2d6f">.</span></div>
+    <div class="ytcard" style="left:90px;top:640px;width:900px;height:650px" data-in="0.05" data-fx="slide" data-from="bottom" data-dist="1100" data-float="6" data-sfx="whoosh" data-vol="0.14">
+      <img class="seq" data-seq="media/yt/" data-f0="76" data-nf="690">
+    </div>
+    <div class="x" style="left:70px;top:560px;--acc:#ff2d6f" data-in="0.4" data-fx="pop" data-spin="40" data-sfx="pop"></div>
+    <div class="x" style="left:960px;top:1340px;scale:.6;--acc:#ff2d6f" data-in="0.6" data-fx="pop" data-spin="-60"></div>
+    <div class="script cx" style="top:1330px;color:#ff2d6f;text-shadow:none" data-in="1.26" data-fx="blur">қарадым</div>
+  </section>
+  <section class="scene" data-s="2.70" data-e="4.65" data-cam="1.16" data-cy="25">
+    <div class="small cx" style="top:236px" data-in="0.06" data-fx="words" data-w="0.06 0.36">чуть-чуть</div>
+    <div class="mos pixw cx bh" style="top:266px" data-in="0.6" data-fx="none" data-pix="7" data-pix-from="40" data-sfx="glitch" data-vol="0.16">скучный</div>
+    <div class="script cx" style="top:382px;font-size:64px" data-in="1.2" data-fx="blur">жерлері бар</div>
+    <div class="bub abs" style="left:930px;top:700px;width:40px;height:40px" data-in="1.25" data-fx="pop" data-float="8"></div>
+    <div class="bub abs" style="left:960px;top:630px;width:56px;height:56px" data-in="1.35" data-fx="pop" data-float="10" data-sfx="pop"></div>
+    <div class="bub abs" style="left:930px;top:540px;width:76px;height:76px" data-in="1.45" data-fx="pop" data-float="12"></div>
+  </section>
+
+  <!-- 2. Claude Code көмегімен (чёрная вставка) -->
+  <section class="scene full bg-black dots" data-s="4.65" data-e="7.50" data-push="0">
+    <div class="small cx" style="top:520px" data-in="0.03" data-fx="words" data-w="0.03 0.29 0.77">сол скучный жерлерді</div>
+    <div class="glow" style="left:190px;top:560px" data-in="1.2" data-fx="blur" data-float="10"></div>
+    <div class="app glass" style="left:445px;top:720px" data-in="1.39" data-fx="pop" data-sfx="pop" data-float="8">
+      <svg viewBox="-50 -50 100 100" style="width:110px;height:110px"><use href="#star"/></svg></div>
+    <div class="cx mono" style="top:960px;font-size:118px;letter-spacing:-6px" data-in="1.39" data-fx="scramble" data-dur="0.6" data-sfx="glitch" data-vol="0.12">Claude Code</div>
+    <div class="script cx" style="top:1062px" data-in="1.95" data-fx="blur">көмегімен</div>
+    <div class="x" style="left:170px;top:700px;scale:.7" data-in="1.5" data-fx="pop" data-spin="50"></div>
+    <div class="x" style="left:900px;top:1180px;scale:.45" data-in="1.7" data-fx="pop" data-spin="-70"></div>
+  </section>
+
+  <!-- 3. монтажерсыз толық монтаж — тёмные карточки стопкой -->
+  <section class="scene" data-s="7.50" data-e="10.70" data-cam="1" data-cy="30">
+    <div class="small cx" style="top:236px" data-in="0.02" data-fx="words" data-w="0.02">монтажерсыз</div>
+    <div class="tag" style="left:150px;top:405px" data-in="1.0" data-fx="pop" data-rot="-25" data-sfx="pop">толық</div>
+    <div class="big cx bh" style="top:282px" data-in="1.48" data-fx="squash" data-sfx="thud" data-vol="0.2">монтаж<span class="dot">.</span></div>
+    <div class="stack abs" style="left:290px;top:1330px;scale:.52;transform-origin:0 0">
+      <div class="dcard" style="top:0" data-in="0.1" data-fx="slide" data-from="left" data-dist="500" data-sfx="whoosh" data-vol="0.1">
+        <div class="ic" style="background:#3a3a3e"><svg width="54" height="54" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="#bbb"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="#bbb"/></svg></div>
+        <div><h3 data-in="0.1" data-strike="0.7" data-fx="none" style="position:relative">Монтажер</h3><p class="r">керек емес</p></div>
+        <div class="badge" style="background:#ff5a5a"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="dcard" style="top:180px" data-in="0.55" data-fx="slide" data-from="left" data-dist="500" data-sfx="pop">
+        <div class="ic" style="background:#f2efe9"><svg viewBox="-50 -50 100 100" style="width:62px;height:62px"><use href="#star"/></svg></div>
+        <div><h3>Claude Code</h3><p class="g">өзі монтаждайды</p></div>
+        <div class="badge" style="background:#2bd16a"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <svg class="draw abs" style="left:700px;top:22px" width="120" height="120" data-in="1.0" data-dur="0.5"><path d="M60 8 C 100 6, 116 40, 108 72 C 98 108, 40 116, 16 88 C -2 62, 10 22, 52 12" style="stroke:#DFFF1F"/></svg>
+      </div>
+      <div class="dcard" style="top:360px;height:190px;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px" data-in="1.0" data-fx="slide" data-from="left" data-dist="500" data-sfx="pop">
+        <div style="display:flex;width:100%;align-items:baseline"><h3 style="font-size:44px">Толық монтаж</h3><p class="g" style="margin-left:auto;font-size:34px" data-in="1.1" data-count="0 100" data-post="%" data-cdur="2.0" data-fx="none">0</p></div>
+        <div class="grid" data-in="1.0" data-cells="96" data-fill="1.1 3.1" data-fx="none" style="grid-template-columns:repeat(32,18px);gap:5px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. сілтемені Claude-қа жіберемін (белая вставка) -->
+  <section class="scene full bg-white dots" data-s="10.70" data-e="14.08" data-push="0">
+    <div class="mid cx" style="top:600px;color:#1d1d1d" data-in="0.06" data-fx="words" data-w="0.06 0.28 0.38">Ол үшін не істеймін?</div>
+    <div class="input" data-in="0.9" data-fx="pop" data-sfx="pop">
+      <div class="ph2" data-in="0.4" data-fx="type" data-dur="1.0" data-sfx="tick" data-vol="0.2">youtube.com/watch?v=podcast</div>
+    </div>
+    <div class="send" style="left:858px;top:853px" data-in="2.48" data-fx="pop" data-sfx="click" data-vol="0.2">
+      <svg width="52" height="52" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="#DFFF1F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="tag" style="left:330px;top:1060px" data-in="2.84" data-fx="pop" data-rot="12" data-sfx="pop">Claude-қа жіберемін</div>
+    <div class="app glass" style="left:445px;top:300px;background:#f3f3f1;border-color:#e2e2df;scale:.75" data-in="0.3" data-fx="pop" data-float="8">
+      <svg viewBox="-50 -50 100 100" style="width:110px;height:110px"><use href="#star"/></svg></div>
+  </section>
+
+  <!-- 5. Claude арнайы скиллдар — барабан вариантов -->
+  <section class="scene" data-s="14.08" data-e="16.48" data-cam="1.16" data-cy="25">
+    <div class="small cx" style="top:236px" data-in="0.02" data-fx="words" data-w="0.02 0.72">Claude арнайы</div>
+    <div class="big cx bh" style="top:282px" data-in="1.34" data-fx="squash" data-sfx="thud" data-vol="0.2">скиллдар<span class="dot">.</span></div>
+    <div class="wheel" style="left:90px;top:680px;width:320px" data-in="0.5" data-fx="blur" data-steps="1.2 1.6 2.0" data-ih="70">
+      <div class="arrow" style="top:0"></div>
+      <div class="track" style="top:0">
+        <div class="it">монтаж</div><div class="it">субтитр</div><div class="it">моушн</div><div class="it">рилс</div><div class="it">хук</div>
+      </div>
+    </div>
+    <div class="px" style="left:880px;top:620px" data-in="1.4" data-fx="pop" data-float="10"></div>
+    <div class="px" style="left:930px;top:580px;scale:.6" data-in="1.5" data-fx="pop" data-float="12"></div>
+    <div class="px" style="left:900px;top:720px;scale:.5" data-in="1.6" data-fx="pop" data-float="9"></div>
+  </section>
+
+  <!-- 6. ДО / ПОСЛЕ: Claude сам смонтировал рилс из подкаста -->
+  <section class="scene full bg-dark gridbg" data-s="16.48" data-e="19.92" data-push="0.03">
+    <div class="script cx" style="top:300px;color:#fff;font-size:62px;text-shadow:none" data-in="0.05" data-fx="words" data-w="0.05 0.35 0.6 0.8">Таймлайнға ешкім тиген жоқ</div>
+    <div class="abs" style="left:60px;top:830px;rotate:-7deg">
+      <div class="ph" style="left:0;top:0;width:330px;height:587px" data-in="0.15" data-fx="slide" data-from="left" data-dist="400">
+        <img class="seq" data-seq="media/yt9/" data-f0="4" data-nf="120"></div>
+      <div class="lbl abs" style="left:-6px;top:-24px" data-in="0.3" data-fx="pop">ДЕЙІН</div>
+    </div>
+    <svg class="draw abs" style="left:170px;top:560px" width="300" height="260" data-in="0.45" data-dur="0.5"><path d="M30 250 C 40 120, 140 50, 270 50 M245 28 L272 50 L245 74" style="stroke:#7fd3ff;stroke-width:7"/></svg>
+    <div class="ph" style="left:450px;top:540px;width:560px;height:996px" data-in="0.2" data-fx="blur" data-sfx="whoosh" data-vol="0.12">
+      <img class="seq" data-seq="media/yt9/" data-f0="4" data-nf="120">
+      <div class="bigw" style="top:70px;font-size:150px" data-in="0.74" data-fx="squash" data-out="2.95" data-sfx="thud" data-vol="0.16">ТОЧКА</div>
+      <div class="bigw" style="top:80px;font-size:118px;color:#DFFF1F" data-in="3.04" data-fx="squash" data-sfx="thud" data-vol="0.16">ЭНЕРГИЯ</div>
+      <img class="seq" data-seq="media/yt9m/" data-ext=".png" data-f0="4" data-nf="120" style="z-index:2">
+      <div class="caps" style="top:575px;z-index:3" data-in="0.0" data-fx="words" data-w="0 0.16 0.5" data-out="2.95">ЕСЛИ У ВАС ЕСТЬ</div>
+      <div class="it" style="top:610px;z-index:3" data-in="0.74" data-fx="words" data-w="0.74 1.1" data-out="2.95"><span style="color:#DFFF1F">стартовая</span> точка</div>
+      <div class="caps" style="top:575px;z-index:3" data-in="3.04" data-fx="words" data-w="3.04 3.08 3.12 3.16">ТО У ВАС БУДЕТ</div>
+      <div class="it" style="top:610px;z-index:3" data-in="3.04" data-fx="words" data-w="3.04 3.2">много <span style="color:#DFFF1F">энергии</span></div>
+    </div>
+    <div class="lbl abs" style="left:800px;top:510px;z-index:5" data-in="0.4" data-fx="pop" data-sfx="pop">
+      <svg viewBox="-50 -50 100 100" style="width:26px;height:26px"><use href="#star"/></svg>КЕЙІН</div>
+    <div class="cta abs" style="left:230px;top:1580px" data-in="1.4" data-fx="pop" data-sfx="pop">
+      <svg viewBox="-50 -50 100 100" style="width:40px;height:40px"><use href="#star"/></svg>Claude өзі монтаждады</div>
+  </section>
+
+  <!-- 7. рилске қиып — көп просмотр (синяя вставка) -->
+  <section class="scene full bg-blue" data-s="19.92" data-e="21.56" data-push="0.05">
+    <div class="phone glass" style="left:260px;top:420px" data-in="0" data-fx="blur" data-float="6"></div>
+    <div class="pill glass" style="left:130px;top:560px" data-in="0.05" data-fx="slide" data-from="left" data-float="6">
+      <svg width="40" height="40" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>Reels</div>
+    <div class="app glass" style="left:690px;top:370px;scale:.6" data-in="0.2" data-fx="pop" data-float="9" data-sfx="pop">
+      <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="small cx" style="top:760px" data-in="0" data-fx="blur">одан да көп</div>
+    <div class="big cx" style="top:830px;font-size:150px;letter-spacing:-6px" data-in="0.04" data-fx="blur" data-count="0 1000000" data-cdur="1.15" data-sfx="whoosh" data-vol="0.12">0</div>
+    <div class="script cx" style="top:990px" data-in="0.32" data-fx="blur">просмотр</div>
+  </section>
+
+  <!-- 8. тек қана бұл емес -->
+  <section class="scene" data-s="21.56" data-e="23.95" data-cam="1.16" data-cy="25">
+    <div class="small cx" style="top:236px" data-in="0.04" data-fx="words" data-w="0.04 0.24">тек қана</div>
+    <div class="big cx bh" style="top:282px" data-in="0.52" data-fx="squash" data-sfx="thud" data-vol="0.22">бұл емес<span class="dot">.</span></div>
+    <div class="x" style="left:70px;top:600px" data-in="0.6" data-fx="pop" data-spin="45" data-sfx="pop"></div>
+    <div class="x" style="left:950px;top:560px;scale:.7" data-in="0.75" data-fx="pop" data-spin="-50"></div>
+  </section>
+
+  <!-- 9. автоворонка → ақша машинасы (зелёная вставка) -->
+  <section class="scene full bg-lime" data-s="23.95" data-e="28.00" data-push="0.04">
+    <div class="mid cx" style="top:330px" data-in="0.05" data-fx="scramble" data-dur="0.6" data-sfx="glitch" data-vol="0.12">автоворонка</div>
+    <div class="ring" style="left:290px;top:640px;width:500px;height:500px" data-in="0.1" data-fx="blur" data-float="6"></div>
+    <div class="coin cx" style="top:740px" data-in="2.19" data-fx="pop" data-sfx="boom" data-vol="0.25">₸</div>
+    <div class="card glass" style="left:50px;top:540px" data-in="0.4" data-fx="pop" data-float="7" data-sfx="pop"><b style="background:#ffb4b4">1</b><br>Reels</div>
+    <div class="card glass" style="left:760px;top:600px" data-in="0.7" data-fx="pop" data-float="8" data-sfx="pop"><b style="background:#ffe08a">2</b><br>Директ</div>
+    <div class="card glass" style="left:60px;top:1100px" data-in="1.0" data-fx="pop" data-float="6" data-sfx="pop"><b style="background:#b8f0c0">3</b><br>Заявка</div>
+    <div class="card glass" style="left:740px;top:1160px" data-in="1.3" data-fx="pop" data-float="9" data-sfx="pop"><b style="background:#DFFF1F">4</b><br>Төлем</div>
+    <div class="script cx" style="top:1330px;color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.25)" data-in="1.39" data-fx="blur">печатающий</div>
+    <div class="big cx" style="top:1392px;font-size:120px;letter-spacing:-5px" data-in="2.19" data-fx="squash">ақша машинасы<span class="dot" style="color:#fff;-webkit-text-fill-color:#fff">.</span></div>
+    <div class="px" style="left:210px;top:470px" data-in="2.3" data-fx="pop" data-float="10"></div>
+    <div class="px" style="left:250px;top:430px;scale:.6" data-in="2.35" data-fx="pop" data-float="12"></div>
+    <div class="px" style="left:830px;top:1050px" data-in="2.4" data-fx="pop" data-float="9"></div>
+    <div class="px" style="left:870px;top:1010px;scale:.6" data-in="2.45" data-fx="pop" data-float="11"></div>
+  </section>
+
+  <!-- 10. Claude-пен грамотный монтаж -->
+  <section class="scene" data-s="28.00" data-e="30.55" data-cam="1" data-cy="30">
+    <div class="small cx" style="top:236px" data-in="0.04" data-fx="words" data-w="0.04 0.36">қалай Claude-пен</div>
+    <div class="tag" style="left:630px;top:400px" data-in="0.84" data-fx="pop" data-rot="18" data-sfx="pop">грамотный</div>
+    <div class="mos pixacc cx bh" style="top:262px" data-in="1.44" data-fx="none" data-pix="1" data-pix-from="34" data-pix-dur="0.6" data-sfx="glitch" data-vol="0.14">монтаж</div>
+  </section>
+
+  <!-- 11. қымбат көрінетін моушн -->
+  <section class="scene" data-s="30.55" data-e="33.12" data-cam="1" data-cy="30">
+    <div class="small cx" style="top:236px" data-in="0.03" data-fx="words" data-w="0.03 0.47">қымбат көрінетін</div>
+    <div class="big cx bh" style="top:282px" data-in="0.99" data-fx="squash" data-sfx="thud" data-vol="0.2">моушн<span class="dot">.</span></div>
+    <div class="x" style="left:70px;top:600px;scale:.7" data-in="1.1" data-fx="pop" data-spin="50" data-sfx="pop"></div>
+    <div class="x" style="left:950px;top:640px;scale:.5" data-in="1.25" data-fx="pop" data-spin="-60"></div>
+  </section>
+
+  <!-- 12. автоворонканы қалай жасау керегін білгің келсе -->
+  <section class="scene" data-s="33.12" data-e="35.95" data-cam="1" data-cy="30">
+    <div class="small cx" style="top:240px" data-in="1.02" data-fx="words" data-w="1.02 1.36 1.6">қалай жасау керегін</div>
+    <div class="big cx bh" style="top:270px" data-in="0.04" data-fx="squash" data-sfx="thud" data-vol="0.2">автоворонка<span class="dot">.</span></div>
+    <div class="tag" style="left:110px;top:400px" data-in="1.98" data-fx="pop" data-rot="-18" data-sfx="pop">білгің келсе</div>
+    <div class="px" style="left:880px;top:560px" data-in="2.05" data-fx="pop" data-float="10"></div>
+    <div class="px" style="left:930px;top:520px;scale:.6" data-in="2.1" data-fx="pop" data-float="12"></div>
+  </section>
+
+  <!-- 13. CTA: төменге «Claude» сөзін жаз (розовая вставка, как в начале) -->
+  <section class="scene full bg-pink" data-s="35.95" data-e="38.70" data-push="0.04">
+    <div class="glow" style="left:-150px;top:500px;width:900px;height:900px;--acc:#ff8fb8" data-in="0" data-fx="blur" data-float="14"></div>
+    <div class="glow" style="left:400px;top:1000px;width:800px;height:800px;--acc:#ffc2d9" data-in="0" data-fx="blur" data-float="10"></div>
+    <div class="small cx" style="top:470px;color:#3a2a30" data-in="0.05" data-fx="blur">төменге</div>
+    <div class="abs" style="left:340px;top:540px;width:130px;height:130px" data-in="0.2" data-fx="pop" data-sfx="pop" data-float="6">
+      <svg viewBox="-50 -50 100 100" style="width:130px;height:130px"><use href="#star"/></svg></div>
+    <div class="big ink abs" style="left:490px;top:540px" data-in="0.25" data-fx="squash" data-sfx="thud" data-vol="0.2">Claude</div>
+    <div class="script cx" style="top:680px;color:#ff2d6f;text-shadow:none;font-size:80px" data-in="0.55" data-fx="blur">сөзін жаз</div>
+    <div class="abs" style="left:90px;top:900px;width:900px;height:130px;border-radius:65px;background:#fff;box-shadow:0 30px 70px rgba(255,45,111,.18),0 0 0 2px #ffd3e2" data-in="0.7" data-fx="slide" data-from="bottom" data-dist="400" data-sfx="whoosh" data-vol="0.1">
+      <div style="position:absolute;left:24px;top:22px;width:86px;height:86px;border-radius:50%;background:linear-gradient(135deg,#ff8fb8,#ff2d6f)"></div>
+      <div style="position:absolute;left:136px;top:36px;font:500 46px Inter;color:#111;white-space:nowrap" data-in="1.0" data-fx="type" data-dur="0.5" data-sfx="tick" data-vol="0.2">Claude</div>
+      <div style="position:absolute;right:26px;top:21px;width:88px;height:88px;border-radius:50%;background:#ff2d6f;display:grid;place-items:center" data-in="1.6" data-fx="pop" data-sfx="click" data-vol="0.2">
+        <svg width="44" height="44" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="chev" style="left:505px;top:1130px;--acc:#ff2d6f" data-in="1.8" data-fx="pop" data-float="14" data-sfx="pop"></div>
+    <div class="chev" style="left:505px;top:1210px;opacity:.6;--acc:#ff2d6f" data-in="1.9" data-fx="pop" data-float="14"></div>
+    <div class="x" style="left:90px;top:780px;--acc:#ff2d6f" data-in="0.4" data-fx="pop" data-spin="40"></div>
+    <div class="x" style="left:930px;top:1300px;scale:.6;--acc:#ff2d6f" data-in="0.6" data-fx="pop" data-spin="-60"></div>
+  </section>
+</div>
+<script src="engine.js"></script>
+</body></html>

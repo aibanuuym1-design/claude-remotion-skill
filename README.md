@@ -145,3 +145,7 @@ Made by [@haidrrrry](https://github.com/haidrrrry) · Follow [@haidercodes](http
 ## 🇰🇿 Nurserik Studio Hook (рилс / таргет-креатив 9:16)
 
 A second skill lives in [`nurserik-studio-hook/`](nurserik-studio-hook/README.md): talking-head vertical Reels / ad creatives (Kazakh & Russian) built with HTML + headless Chrome + ffmpeg — captions above the head, bottom-of-frame lists, full-screen color inserts, two ending variants, and a BEFORE/AFTER video. See its [README](nurserik-studio-hook/README.md).
+
+## ✂️ shorts (long video → Shorts / Reels / TikTok)
+
+Third skill in [`shorts/`](shorts/README_RU.md): Claude transcribes a long video, scores the best 15–55 s moments, and renders vertical clips with animated word-level captions via Remotion. Russian guide: [README_RU.md](shorts/README_RU.md). Based on claude-shorts (MIT).

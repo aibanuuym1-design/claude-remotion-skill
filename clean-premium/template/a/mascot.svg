@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Клоуди, гладкая версия для «Чистого премиума»: малиновый квадратик, антенна-сердечко, глазки-точки, ножки -->
+  <defs>
+    <radialGradient id="body" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#ff8db4"/><stop offset=".45" stop-color="#e94a83"/><stop offset="1" stop-color="#a8185a"/>
+    </radialGradient>
+    <radialGradient id="heart" cx="35%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#ffa3c4"/><stop offset="1" stop-color="#d42f6f"/>
+    </radialGradient>
+    <linearGradient id="leg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c22a68"/><stop offset="1" stop-color="#8e1248"/></linearGradient>
+  </defs>
+  <path d="M200 132 C198 105 204 88 200 66" fill="none" stroke="#c8306f" stroke-width="9" stroke-linecap="round"/>
+  <path d="M200 76 C186 62 166 66 168 48 C170 32 192 30 200 46 C208 30 230 32 232 48 C234 66 214 62 200 76Z" fill="url(#heart)"/>
+  <ellipse cx="186" cy="44" rx="8" ry="5" fill="#fff" opacity=".6" transform="rotate(-25 186 44)"/>
+  <rect x="128" y="318" width="44" height="46" rx="16" fill="url(#leg)"/>
+  <rect x="228" y="318" width="44" height="46" rx="16" fill="url(#leg)"/>
+  <rect x="58" y="210" width="40" height="64" rx="18" fill="#c4286a"/>
+  <rect x="302" y="210" width="40" height="64" rx="18" fill="#c4286a"/>
+  <rect x="78" y="128" width="244" height="212" rx="84" fill="url(#body)"/>
+  <ellipse cx="160" cy="168" rx="62" ry="26" fill="#fff" opacity=".38" transform="rotate(-12 160 168)"/>
+  <ellipse cx="160" cy="236" rx="14" ry="19" fill="#1b1016"/>
+  <ellipse cx="240" cy="236" rx="14" ry="19" fill="#1b1016"/>
+  <circle cx="165" cy="228" r="5.5" fill="#fff"/><circle cx="245" cy="228" r="5.5" fill="#fff"/>
+  <ellipse cx="128" cy="270" rx="20" ry="11" fill="#ffb0cb" opacity=".75"/>
+  <ellipse cx="272" cy="270" rx="20" ry="11" fill="#ffb0cb" opacity=".75"/>
+  <path d="M186 272 Q200 286 214 272" fill="none" stroke="#1b1016" stroke-width="6" stroke-linecap="round"/>
+</svg>

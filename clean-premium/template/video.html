@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Чистый премиум — пример</title>
+<link rel="stylesheet" href="style.css">
+</head><body>
+
+<!-- 1. Привет -->
+<section class="scene" data-s="0" data-e="1.25" data-bg="blush" data-m="540,1060,440">
+  <div class="cap big" data-w="0.05 | 0.44 0.6">Привет, | я Клоуди</div>
+  <div class="glow" data-float="30" style="left:-120px;top:900px;--c:#ffb3cc"></div>
+  <div class="glow" data-float="30" style="right:-160px;top:1200px;--c:#d6c8ff"></div>
+</section>
+
+<!-- 2. Вручную это часы -->
+<section class="scene" data-s="1.25" data-e="4.4" data-bg="mist" data-m="890,1470,190">
+  <div class="cap" data-w="0.07 0.51 0.71 0.99 | 1.71 1.95 2.27 2.39 2.67">Ролик без лица вручную | это часы в After Effects</div>
+  <div class="laptop" data-in="0.1" data-from="bottom" style="left:180px;top:720px">
+    <div class="screen" style="background:#25232b;padding:26px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <i style="height:30px;width:70%;border-radius:8px;background:#7a5cff"></i>
+        <i style="height:30px;width:45%;margin-left:20%;border-radius:8px;background:#ff7aa8"></i>
+        <i style="height:30px;width:60%;margin-left:35%;border-radius:8px;background:#4fc3a1"></i>
+        <i style="height:30px;width:35%;margin-left:10%;border-radius:8px;background:#ffc04d"></i>
+        <i style="height:30px;width:55%;margin-left:40%;border-radius:8px;background:#7a5cff"></i>
+        <i style="height:30px;width:40%;margin-left:5%;border-radius:8px;background:#ff7aa8"></i>
+      </div>
+    </div>
+  </div>
+  <img class="ico" src="a/icons/hourglass_not_done.png" data-in="1.95" data-pop data-float="12" data-sfx="pop" style="left:110px;top:1210px;width:170px">
+  <img class="ico" src="a/icons/alarm_clock.png" data-in="2.3" data-pop data-float="12" style="left:770px;top:600px;width:170px">
+</section>
+
+<!-- 3. Иконки, карточки, переходы -->
+<section class="scene" data-s="4.4" data-e="6.5" data-bg="mist" data-m="540,1480,200" data-sfx="none">
+  <div class="cap" data-w="0.08 0.8 | 1.48">Иконки, карточки, | переходы</div>
+  <div class="tile" data-in="0.08" data-pop data-float="10" data-sfx="pop" style="left:70px;top:760px"><img src="a/icons/sparkles.png">иконки</div>
+  <div class="tile" data-in="0.8" data-pop data-float="10" data-sfx="pop" style="left:410px;top:860px"><img src="a/icons/memo.png">карточки</div>
+  <div class="tile" data-in="1.48" data-pop data-float="10" data-sfx="pop" style="left:750px;top:760px"><img src="a/icons/magic_wand.png">переходы</div>
+</section>
+
+<!-- 4. Ты пишешь текст, я озвучиваю -->
+<section class="scene" data-s="6.5" data-e="10.45" data-bg="sky" data-m="230,1420,190">
+  <div class="cap" data-w="0.1 0.5 | 0.94 1.1 1.5 1.74" data-out="2.05" style="color:#fff">Теперь смотри. | ты пишешь мне текст</div>
+  <div class="cap" data-w="2.18 2.38 | 3.14 3.42" style="color:#fff">Я озвучиваю | его голосом</div>
+  <div class="phone" data-in="0" data-from="bottom" style="left:325px;top:640px">
+    <div class="screen">
+      <div style="position:absolute;top:70px;left:0;right:0;text-align:center;font-weight:600;font-size:22px;color:#8c8794">Клоуди</div>
+      <div class="chat" style="top:130px">
+        <div class="msg me" data-in="0.95"><span data-type="Сделай ролик про мой курс" data-tin="1.0" data-tdur="0.9"></span></div>
+        <div class="typing" data-in="1.95" data-out="2.45"><i></i><i></i><i></i></div>
+        <div class="msg bot" data-in="2.5" style="display:flex;align-items:center;gap:12px;width:86%">▶<div class="wave" data-bars="18" data-play="2.6" style="height:44px;flex:1;gap:4px"></div></div>
+      </div>
+    </div>
+  </div>
+  <img class="ico" src="a/icons/studio_microphone.png" data-in="2.3" data-pop data-float="12" data-sfx="pop" style="left:790px;top:1000px;width:170px">
+</section>
+
+<!-- 5. Собираю сцены -->
+<section class="scene" data-s="10.45" data-e="13.55" data-bg="sunset" data-m="870,1480,180">
+  <div class="cap" data-w="0.07 0.63 | 1.31 1.87 2.51">Собираю сцены: | телефон, карточки, иконки</div>
+  <div class="phone" data-in="1.31" data-from="bottom" data-sfx="whoosh" data-vol="0.09" style="left:150px;top:690px;width:380px">
+    <div class="screen"><div class="bg mist" style="inset:0"></div>
+      <div style="position:absolute;top:90px;left:0;right:0;text-align:center;font-size:30px">Каждое утро<br><b style="color:#e2457e">план на день</b></div>
+      <img src="a/icons/sun.png" style="position:absolute;left:110px;top:260px;width:140px;height:auto">
+    </div>
+  </div>
+  <div class="glass" data-in="1.87" data-from="right" data-float="8" style="left:560px;top:860px;width:400px">
+    <b>Сводка</b><br>3 ролика готовы<br>1 ждёт правок
+  </div>
+  <img class="ico" src="a/icons/rocket.png" data-in="2.51" data-pop data-float="14" data-sfx="pop" style="left:640px;top:1150px;width:150px">
+  <img class="ico" src="a/icons/pink_heart.png" data-in="2.62" data-pop data-float="14" style="left:830px;top:680px;width:120px">
+  <img class="ico" src="a/icons/calendar.png" data-in="2.72" data-pop data-float="14" style="left:60px;top:1230px;width:140px">
+</section>
+
+<!-- 6. Каждое слово под голос -->
+<section class="scene" data-s="13.55" data-e="16.2" data-bg="mint" data-m="540,1500,180">
+  <div class="cap" data-w="0.05 0.21 0.61 | 1.01 1.69 2.05 2.25">И каждое слово | появляется ровно под голос</div>
+  <div class="glass" data-in="0.15" style="left:90px;right:90px;top:900px;padding:40px">
+    <div class="wave" data-bars="40" data-play="0.2" style="height:150px"></div>
+  </div>
+  <div class="pill" data-in="0.21" data-pop data-from="bottom" data-dist="60" style="left:150px;top:770px">каждое</div>
+  <div class="pill" data-in="0.61" data-pop data-from="bottom" data-dist="60" style="left:400px;top:770px">слово</div>
+  <div class="pill acc" data-in="1.69" data-pop data-from="bottom" data-dist="60" style="left:610px;top:770px">ровно</div>
+  <i class="ring" data-in="1.69" style="left:697px;top:812px;width:250px"></i>
+</section>
+
+<!-- 7. Светлый -->
+<section class="scene" data-s="16.2" data-e="18.45" data-bg="blush" data-m="870,1450,170">
+  <div class="cap" data-w="0.08 0.52 0.96 | 1.44">Хочешь светлый стиль? | Пожалуйста</div>
+  <div class="frame" data-in="0.5" style="left:310px;top:700px;width:420px" data-pop data-float="8" data-sfx="pop">
+    <div class="bg mist"></div>
+    <div class="mini">Каждое утро<b>присылает сводку</b></div>
+    <img src="a/icons/sun.png" style="position:absolute;left:110px;top:250px;width:140px">
+    <div class="glass" style="left:40px;right:40px;top:420px;font-size:24px;padding:20px;border-radius:26px">☀ План на день</div>
+  </div>
+</section>
+
+<!-- 8. Тёмный -->
+<section class="scene dark" data-s="18.45" data-e="19.95" data-bg="ink" data-m="870,1450,170">
+  <div class="cap" data-w="0.07 | 0.75 1.15">Тёмный? | Тоже могу</div>
+  <div class="frame dark" data-in="0.1" data-pop data-float="8" style="left:340px;top:720px;border-color:rgba(255,255,255,.15)">
+    <div class="bg night"></div>
+    <div class="mini" style="color:#fff">Делает<b>напоминания</b></div>
+    <img src="a/icons/bell.png" style="position:absolute;left:115px;top:240px;width:130px">
+    <div class="pill dark" style="left:70px;top:430px;font-size:24px;padding:12px 22px">3 клиента</div>
+  </div>
+  <i class="ring white" data-in="0.6" style="left:524px;top:1030px;width:240px"></i>
+</section>
+
+<!-- 9. Ярко и капсом -->
+<section class="scene vivid" data-s="19.95" data-e="21.95" data-bg="berry" data-m="870,1480,170">
+  <div class="cap" data-w="0.05 0.57 0.73 | 1.41">Ярко и капсом? | Легко</div>
+  <div class="frame" data-in="0.2" data-pop data-float="8" data-sfx="pop" style="left:340px;top:760px">
+    <div class="bg honey"></div>
+    <div class="mini" style="font-weight:800;color:#fff;text-transform:uppercase">Агент<b style="color:#8a5a00;background:#fff;border-radius:30px;margin:8px 30px 0">в деле</b></div>
+    <img src="a/icons/fire.png" style="position:absolute;left:110px;top:250px;width:140px">
+  </div>
+</section>
+
+<!-- 10. Правки словами -->
+<section class="scene" data-s="21.95" data-e="26.0" data-bg="mist" data-m="230,1500,180">
+  <div class="cap" data-w="0.09 | 0.53 0.93">Правки | пишешь словами</div>
+  <div class="phone" data-in="0.2" data-from="bottom" style="left:325px;top:620px">
+    <div class="screen">
+      <div style="position:absolute;top:70px;left:0;right:0;text-align:center;font-weight:600;font-size:22px;color:#8c8794">Клоуди</div>
+      <div class="chat" style="top:130px">
+        <div class="msg bot" data-in="0.5">Ролик готов 🎬 Что поменять?</div>
+        <div class="msg me" data-in="1.55"><span data-type="На 5-й секунде сделай текст крупнее" data-tin="1.6" data-tdur="1.7"></span></div>
+        <div class="typing" data-in="3.5"><i></i><i></i><i></i></div>
+      </div>
+      <div style="position:absolute;left:30px;right:30px;bottom:90px;height:14px;border-radius:8px;background:#ece8ef" data-in="1.6">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:30%;border-radius:8px;background:#e2457e"></div>
+        <div style="position:absolute;left:30%;top:-46px;translate:-50% 0;font-weight:700;font-size:24px;color:#e2457e">0:05</div>
+      </div>
+    </div>
+  </div>
+  <i class="ring" data-in="2.0" style="left:472px;top:1420px;width:170px"></i>
+</section>
+
+<!-- 11. Готово -->
+<section class="scene" data-s="26.0" data-e="27.35" data-bg="mint" data-m="540,1460,210">
+  <div class="cap" data-w="0.02 0.32 | 0.84">Через минуту | готово</div>
+  <img class="ico" src="a/icons/check_mark_button.png" data-in="0.8" data-pop data-sfx="ding" style="left:390px;top:780px;width:300px">
+  <i class="ring" data-in="0.84" style="left:540px;top:930px;width:420px"></i>
+  <img class="ico" src="a/icons/party_popper.png" data-in="0.95" data-pop data-float="12" style="left:120px;top:1110px;width:150px">
+</section>
+
+<!-- 12. Собран скиллом -->
+<section class="scene" data-s="27.35" data-e="29.45" data-bg="blush" data-m="820,1450,200">
+  <div class="cap" data-w="0.05 0.41 | 0.85 1.09 1.53">Этот ролик | тоже собран скиллом</div>
+  <div class="glass" data-in="1.4" data-pop data-float="8" data-sfx="pop" style="left:190px;right:190px;top:820px;display:flex;align-items:center;gap:26px">
+    <img src="a/icons/file_folder.png" style="width:120px"><div><b>clean-premium</b><br><span style="font-size:30px;color:#8c8794">скилл · zip</span></div>
+  </div>
+  <img class="ico" src="a/icons/gem_stone.png" data-in="1.6" data-pop data-float="12" style="left:150px;top:1120px;width:140px">
+</section>
+
+<!-- 13. Финал -->
+<section class="scene" data-s="29.45" data-e="34.2" data-bg="blush" data-m="540,1180,420" data-cam="out">
+  <div class="cap" data-w="0.03 0.31">Он называется</div>
+  <div class="cap big" data-w="1.07 1.55" style="top:430px">Чистый премиум</div>
+  <div class="cap" data-w="| 2.19 2.79 2.99 3.15" style="top:580px">| найдёшь его в курсе</div>
+  <div class="glow" data-float="30" style="left:-120px;top:1000px;--c:#ffb3cc"></div>
+  <div class="glow" data-float="30" style="right:-160px;top:1250px;--c:#d6c8ff"></div>
+  <img class="ico" src="a/icons/sparkles.png" data-in="1.55" data-pop data-float="12" data-sfx="ding" data-vol="0.08" style="left:780px;top:1050px;width:130px">
+</section>
+
+<img id="mascot" src="a/mascot.svg">
+<script src="engine.js"></script>
+</body></html>

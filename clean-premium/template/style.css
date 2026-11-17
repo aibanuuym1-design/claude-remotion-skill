@@ -1,0 +1,118 @@
+/* «Чистый премиум»: темы и элементы. Кадр 1080×1920. */
+@font-face { font-family: Inter; src: url(a/Inter.ttf); font-weight: 100 900; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+body { font-family: Inter, sans-serif; position: relative; -webkit-font-smoothing: antialiased; }
+
+/* ТЕМЫ: класс на <body> (весь ролик) или на сцене: светлая (по умолчанию), dark (тёмная техно), vivid (яркая, капсом) */
+body { --ink: #1d1b22; --soft: #3a3640; --acc: #e2457e; --glass: rgba(255,255,255,.62); --line: rgba(255,255,255,.9); --shadow: 0 40px 90px rgba(60,30,70,.18); }
+.dark { --ink: #f4f2fa; --soft: #cfc9de; --acc: #a98bff; --glass: rgba(40,36,60,.55); --line: rgba(255,255,255,.14); --shadow: 0 40px 90px rgba(0,0,0,.45); }
+.vivid { --ink: #fff; --soft: #fff; --acc: #fff; --glass: rgba(255,255,255,.7); --shadow: 0 40px 90px rgba(0,0,0,.28); }
+
+.scene { position: absolute; inset: 0; overflow: hidden; display: none; }
+.cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+
+/* ФОНЫ: data-bg на сцене */
+.bg { position: absolute; inset: -40px; background-size: cover; background-position: center; }
+.bg.photo { filter: blur(10px) saturate(1.05); transform: scale(1.06); }
+.bg.mist { background: radial-gradient(60% 40% at 20% 30%, #f9d9e6 0, transparent 70%), radial-gradient(55% 40% at 85% 70%, #dcd6fb 0, transparent 70%), #f5f2f7; }
+.bg.blush { background: radial-gradient(70% 45% at 50% 20%, #ffe1ea 0, transparent 70%), radial-gradient(60% 40% at 15% 85%, #ffd3e2 0, transparent 70%), #fbf3f6; }
+.bg.sky { background: radial-gradient(40% 12% at 25% 70%, rgba(255,255,255,.85) 0, transparent 70%), radial-gradient(45% 10% at 80% 30%, rgba(255,255,255,.75) 0, transparent 70%), radial-gradient(35% 8% at 70% 85%, rgba(255,255,255,.7) 0, transparent 70%), linear-gradient(#3f8ee8 0, #7db6f2 55%, #cfe4fa 100%); }
+.bg.sunset { background: radial-gradient(60% 30% at 50% 78%, #ffd2a6 0, transparent 70%), linear-gradient(#f3d9e4 0, #f7d3c6 50%, #f4b99a 100%); }
+.bg.mint { background: radial-gradient(60% 40% at 30% 25%, #dff6ea 0, transparent 70%), radial-gradient(60% 40% at 80% 80%, #d6ecfb 0, transparent 70%), #eef7f3; }
+.bg.night { background: radial-gradient(70% 30% at 100% 75%, #8b3dff 0, transparent 70%), radial-gradient(60% 25% at 0% 25%, #5a2bd6 0, transparent 70%), linear-gradient(#130b4a, #24107a); }
+.bg.ink { background: radial-gradient(70% 30% at 50% 0%, #2a2150 0, transparent 70%), radial-gradient(60% 22% at 50% 100%, #10302a 0, transparent 70%), #0b0a10; }
+.bg.berry { background: radial-gradient(60% 40% at 50% 40%, #e0405a 0, transparent 75%), linear-gradient(#4a0d1a, #8e1630 55%, #3a0a14); }
+.bg.lime { background: radial-gradient(60% 45% at 50% 45%, #8be39a 0, transparent 75%), linear-gradient(#0f3d22, #22894a 55%, #0d3a20); }
+.bg.honey { background: radial-gradient(60% 45% at 50% 45%, #ffe08a 0, transparent 75%), linear-gradient(#6a4a08, #d39a1c 55%, #5c3e06); }
+.bg.grape { background: radial-gradient(60% 45% at 50% 45%, #b79bff 0, transparent 75%), linear-gradient(#2a1660, #6a3ed6 55%, #241250); }
+
+/* ТЕКСТ СВЕРХУ: <div class="cap">первая строка | вторая строка</div> */
+.cap { position: absolute; top: 300px; left: 90px; right: 90px; text-align: center; color: var(--ink); }
+.cap .l1 { font-weight: 400; font-size: 62px; line-height: 1.15; letter-spacing: -.01em; }
+.cap .l2 { font-weight: 700; font-size: 60px; line-height: 1.2; color: var(--acc); margin-top: 6px; }
+.cap .w { display: inline-block; opacity: 0; }
+.cap.big .l1 { font-weight: 800; font-size: 104px; white-space: nowrap; letter-spacing: -.03em; }
+.cap.low { top: auto; bottom: 380px; }
+.vivid .cap .l1 { font-weight: 800; text-transform: uppercase; font-size: 66px; letter-spacing: .01em; }
+.vivid .cap .l2 { display: inline-block; font-weight: 800; text-transform: uppercase; font-size: 76px; color: var(--hl, #c2273f); background: #fff; padding: 2px 34px 8px; border-radius: 60px; margin-top: 16px; box-shadow: 0 16px 40px rgba(0,0,0,.25); }
+.dark .cap .l1 { font-weight: 600; font-size: 58px; }
+
+/* ПОЗИЦИЯ: любой элемент ставится style="left:..;top:.." */
+.abs, .phone, .laptop, .glass, .ico, .pill, .ring, .num, .notif, .glow, .shot { position: absolute; }
+.center { left: 50%; translate: -50% 0; }
+
+/* ТЕЛЕФОН: <div class="phone" style="left:..;top:..;width:430px"><div class="screen">…</div></div> */
+.phone { width: 430px; aspect-ratio: 9 / 19.3; border-radius: 64px; padding: 14px; background: linear-gradient(145deg, #ffffff, #e9e6ee); box-shadow: var(--shadow), inset 0 0 0 2px rgba(255,255,255,.9); }
+.phone::before { content: ''; position: absolute; top: 30px; left: 50%; translate: -50% 0; width: 30%; height: 34px; border-radius: 20px; background: #111; z-index: 3; }
+.phone .screen { position: relative; width: 100%; height: 100%; border-radius: 50px; overflow: hidden; background: #fbfaf9; color: #1d1b22; font-size: 24px; }
+.phone .screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.phone.black { background: linear-gradient(145deg, #34313c, #121116); box-shadow: var(--shadow), inset 0 0 0 2px rgba(255,255,255,.12); }
+.phone.black .screen { background: #0f1a14; color: #fff; }
+
+/* НОУТБУК: <div class="laptop" style="..;width:720px"><div class="screen">…</div></div> */
+.laptop { width: 720px; }
+.laptop .screen { position: relative; aspect-ratio: 16 / 10; border-radius: 26px 26px 6px 6px; border: 14px solid #1c1b20; overflow: hidden; background: #fff; box-shadow: var(--shadow); }
+.laptop .screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.laptop::after { content: ''; display: block; height: 26px; margin: 0 -50px; border-radius: 0 0 26px 26px; background: linear-gradient(#e7e5ea, #b9b6bf); }
+
+/* СКРИН С ТЕНЬЮ: <img class="shot" src=".."> */
+.shot { border-radius: 34px; box-shadow: var(--shadow); border: 4px solid rgba(255,255,255,.9); }
+
+/* СТЕКЛЯННАЯ КАРТОЧКА */
+.glass { background: var(--glass); backdrop-filter: blur(24px) saturate(1.4); border: 2px solid var(--line); border-radius: 44px; box-shadow: var(--shadow); padding: 36px 40px; color: var(--ink); font-size: 36px; line-height: 1.35; }
+.glass b { font-weight: 700; }
+
+/* УВЕДОМЛЕНИЕ НА ЭКРАНЕ ТЕЛЕФОНА */
+.notif { left: 22px; right: 22px; background: rgba(255,255,255,.88); backdrop-filter: blur(20px); border-radius: 30px; padding: 20px 22px; display: flex; gap: 16px; align-items: center; box-shadow: 0 14px 30px rgba(0,0,0,.12); font-size: 20px; line-height: 1.3; color: #1d1b22; }
+.notif img { width: 54px; height: 54px; border-radius: 14px; flex: none; object-fit: contain; background: #fde7ef; padding: 4px; }
+.notif b { display: block; font-size: 20px; }
+
+/* ЧАТ ВНУТРИ ТЕЛЕФОНА */
+.chat { position: absolute; left: 22px; right: 22px; top: 110px; display: flex; flex-direction: column; gap: 14px; }
+.msg { max-width: 86%; padding: 18px 22px; border-radius: 26px; font-size: 26px; line-height: 1.35; background: #efedf1; color: #1d1b22; }
+.msg.me { align-self: flex-end; background: var(--acc); color: #fff; border-bottom-right-radius: 8px; }
+.msg.bot { border-bottom-left-radius: 8px; }
+.typing { display: inline-flex; gap: 8px; padding: 18px 22px; background: #efedf1; border-radius: 26px; align-self: flex-start; }
+.typing i { width: 12px; height: 12px; border-radius: 50%; background: #8c8794; }
+.btn { display: block; text-align: center; padding: 16px; border-radius: 20px; background: #1d1b22; color: #fff; font-weight: 600; font-size: 22px; }
+.btn.pressed { background: var(--acc); }
+
+/* 3D-ИКОНКА: <img class="ico" src="a/icons/rocket.png" style="left;top;width:150px"> */
+.ico { width: 150px; filter: drop-shadow(0 24px 30px rgba(0,0,0,.18)); }
+
+/* ПИЛЮЛЯ-ТЕГ */
+.pill { padding: 18px 34px; border-radius: 60px; font-weight: 600; font-size: 34px; background: rgba(255,255,255,.85); color: #1d1b22; box-shadow: 0 14px 34px rgba(0,0,0,.12); white-space: nowrap; display: flex; align-items: center; gap: 14px; }
+.pill img { width: 48px; }
+.pill.dark { background: #1d1b22; color: #fff; }
+.pill.acc { background: var(--acc); color: #fff; }
+
+/* КОЛЬЦО-ВЫДЕЛЕНИЕ: <i class="ring" data-in="1.2" style="left:540px;top:900px;width:300px"></i> (left/top = центр) */
+.ring { aspect-ratio: 1; pointer-events: none; }
+.ring svg { width: 100%; height: 100%; overflow: visible; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke: var(--acc); stroke-width: 1.4; stroke-dasharray: 1; stroke-dashoffset: 1; stroke-linecap: round; filter: drop-shadow(0 0 6px var(--acc)); }
+.dark .ring circle, .ring.white circle { stroke: #fff; }
+
+/* БОЛЬШАЯ ТОНКАЯ ЦИФРА: <div class="num center" data-count="5.5" style="top:..">0</div> */
+.num { font-weight: 200; font-size: 300px; line-height: 1; letter-spacing: -.04em; color: var(--ink); }
+.vivid .num, .bg.sky ~ .cam .num { color: #fff; }
+
+/* ЦВЕТНОЕ СВЕЧЕНИЕ НА ФОНЕ */
+.glow { width: 520px; height: 520px; border-radius: 50%; background: var(--c, #ffb3cc); filter: blur(90px); opacity: .7; }
+
+/* ТАЛИСМАН (Клоуди или свой персонаж) */
+#mascot { position: absolute; z-index: 50; filter: drop-shadow(0 26px 30px rgba(80,20,60,.25)); opacity: 0; }
+
+/* МИНИ-КАДР (превью ролика/стиля): <div class="frame mist" style="left;top;width:360px">…</div> */
+.frame { position: absolute; width: 360px; aspect-ratio: 9 / 16; border-radius: 40px; overflow: hidden; box-shadow: var(--shadow); border: 4px solid rgba(255,255,255,.85); }
+.frame > .bg { inset: 0; }
+.frame .mini { position: absolute; top: 60px; left: 20px; right: 20px; text-align: center; font-size: 30px; line-height: 1.2; color: var(--ink); }
+.frame .mini b { display: block; color: var(--acc); }
+
+/* ПЛИТКА С ИКОНКОЙ И ПОДПИСЬЮ */
+.tile { position: absolute; width: 260px; padding: 34px 20px 28px; text-align: center; border-radius: 44px; background: var(--glass); backdrop-filter: blur(24px); border: 2px solid var(--line); box-shadow: var(--shadow); font-weight: 600; font-size: 34px; color: var(--ink); }
+.tile img { width: 140px; display: block; margin: 0 auto 14px; filter: drop-shadow(0 16px 20px rgba(0,0,0,.15)); }
+
+/* ЗВУКОВАЯ ВОЛНА: <div class="wave">  + столбики создаются сами (data-bars="40") */
+.wave { display: flex; align-items: center; gap: 8px; height: 160px; }
+.wave i { flex: 1; border-radius: 8px; background: var(--acc); opacity: .85; }

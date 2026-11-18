@@ -6,3 +6,4 @@ examples/public/sfx/
 # PROXIMA course skills: kept locally only, README is public
 proxima-skills/*
 !proxima-skills/README.md
+out/

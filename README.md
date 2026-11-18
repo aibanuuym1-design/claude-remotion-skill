@@ -126,6 +126,10 @@ npm run audio            # synthesize the SFX and music, no asset files needed
 npm run render:selffix   # or render:codeedit / render:profile / render:focuscat
 ```
 
+## 🎬 PROXIMA editing skills (RU/KK)
+
+11 more editing skills (clean cut, shorts, motion titles, expert split, CapCut effects, faceless motion, collage, paper history, 3D cartoons) live in [`proxima-skills/`](proxima-skills/README.md), with a Russian README that maps each skill to its use case.
+
 ## 🤝 Contributing
 
 PRs welcome — new motion patterns, palettes, or fixes. See [CONTRIBUTING.md](CONTRIBUTING.md).

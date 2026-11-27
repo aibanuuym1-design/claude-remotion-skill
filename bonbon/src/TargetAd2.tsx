@@ -79,8 +79,9 @@ const GoldFrame: React.FC<{ delay: number; inset?: number }> = ({ delay, inset =
 
 type CardIn = "rise" | "flip" | "unfold" | "slide";
 // Ivory card with gold frame; several entrance styles; soft exit.
-const Card: React.FC<{ enter: CardIn; len: number; children: React.ReactNode; width?: number; y?: number }> =
-({ enter, len, children, width = 900, y = 250 }) => {
+// Compact card kept to the top (or bottom) band so the bonbonnieres stay visible.
+const Card: React.FC<{ enter: CardIn; len: number; children: React.ReactNode; width?: number; pos?: "top" | "bottom" }> =
+({ enter, len, children, width, pos = "top" }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const s = spring({ frame: f, fps, config: { damping: 17, stiffness: 120, mass: 0.8 } });
@@ -92,11 +93,12 @@ const Card: React.FC<{ enter: CardIn; len: number; children: React.ReactNode; wi
     slide: `translateX(${(1 - s) * -1100}px) rotate(${(1 - s) * -6}deg)`,
   };
   return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-start", paddingTop: y }}>
-      <div style={{ position: "relative", width, background: CARD, borderRadius: 14, padding: "58px 54px 52px",
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: pos === "top" ? "flex-start" : "flex-end",
+      paddingTop: pos === "top" ? 150 : 0, paddingBottom: pos === "bottom" ? 360 : 0 }}>
+      <div style={{ position: "relative", width, maxWidth: 880, background: CARD, borderRadius: 12, padding: "40px 50px 34px",
         boxShadow: "0 24px 60px rgba(120,80,60,0.18)", opacity: Math.min(1, s * 2) * (1 - out),
         transform: `${tr[enter]} translateY(${-out * 40}px) scale(${1 - out * 0.05})`, transformOrigin: enter === "unfold" ? "50% 0%" : "50% 50%" }}>
-        <GoldFrame delay={8} />
+        <GoldFrame delay={8} inset={10} />
         {children}
       </div>
     </AbsoluteFill>
@@ -183,9 +185,9 @@ const Tag: React.FC<{ text: string; rot: number; x: number; y: number; delay: nu
   const swing = Math.sin((f - delay) / 7) * 3 * Math.exp(-(f - delay) / 40);
   return (
     <div style={{ position: "absolute", left: x, top: y, transform: `translate(-50%,-50%) scale(${s}) rotate(${rot + swing}deg)`,
-      opacity: Math.min(1, s * 2), background: CARD, borderRadius: 12, padding: "26px 48px", boxShadow: "0 18px 40px rgba(120,80,60,0.18)" }}>
-      <div style={{ position: "absolute", inset: 9, border: `1.5px solid ${GOLD}`, borderRadius: 7 }} />
-      <div style={{ fontFamily: SCRIPT, fontSize: 104, color: INK, whiteSpace: "nowrap", lineHeight: 1.3 }}>{text}</div>
+      opacity: Math.min(1, s * 2), background: CARD, borderRadius: 12, padding: "16px 36px", boxShadow: "0 18px 40px rgba(120,80,60,0.18)" }}>
+      <div style={{ position: "absolute", inset: 7, border: `1.5px solid ${GOLD}`, borderRadius: 7 }} />
+      <div style={{ fontFamily: SCRIPT, fontSize: 70, color: INK, whiteSpace: "nowrap", lineHeight: 1.3 }}>{text}</div>
     </div>
   );
 };
@@ -195,15 +197,15 @@ const BeatTags: React.FC<{ len: number }> = ({ len }) => {
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: 1 - merge, transform: `scale(${1 - merge * 0.2})` }}>
-        <Tag text="Түсі," rot={-6} x={340} y={520} delay={0} />
-        <Tag text="пішіні," rot={5} x={700} y={800} delay={22} />
-        <Tag text="безендірілуі —" rot={-3} x={540} y={1090} delay={44} />
+        <Tag text="Түсі," rot={-6} x={300} y={300} delay={0} />
+        <Tag text="пішіні," rot={5} x={770} y={430} delay={22} />
+        <Tag text="безендірілуі —" rot={-3} x={450} y={570} delay={44} />
       </AbsoluteFill>
       <Sequence from={74}>
-        <Card enter="rise" len={len - 74} y={260}>
-          <Words lines={["Түсі, пішіні, безендірілуі —"]} size={42} per={2} />
+        <Card enter="rise" len={len - 74}>
+          <Words lines={["Түсі, пішіні, безендірілуі —"]} size={34} per={2} />
           <div style={{ height: 14 }} />
-          <Words lines={["барлығы сіздің", "таңдауыңыз бойынша!"]} size={88} italic delay={10} per={3} />
+          <Words lines={["барлығы сіздің", "таңдауыңыз бойынша!"]} size={72} italic delay={10} per={3} />
         </Card>
       </Sequence>
     </AbsoluteFill>
@@ -219,20 +221,20 @@ const Cta: React.FC = () => {
   const pulse = 1 + Math.max(0, Math.sin((f - 80) / 9)) * 0.04 * (f > 80 ? 1 : 0);
   const ring = ((f - 80) % 40) / 40;
   return (
-    <Card enter="unfold" len={9999} y={300} width={920}>
+    <Card enter="unfold" len={9999} width={800}>
       <div style={{ display: "flex", justifyContent: "center", opacity: Math.min(1, logo * 1.4),
         transform: `scale(${0.6 + 0.4 * logo})` }}>
-        <Img src={staticFile("real/logo.png")} style={{ width: 520 }} />
+        <Img src={staticFile("real/logo.png")} style={{ width: 380 }} />
       </div>
-      <div style={{ height: 30 }} />
-      <Words lines={["Қонақтарыңызға ерекше", "естелік сыйлағыңыз келсе,"]} size={40} delay={30} per={3} />
+      <div style={{ height: 16 }} />
+      <Words lines={["Қонақтарыңызға ерекше", "естелік сыйлағыңыз келсе,"]} size={34} delay={30} per={3} />
       <div style={{ height: 6 }} />
-      <Handwrite lines={["маған жазыңыз"]} size={104} delay={50} speed={1.2} />
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 34 }}>
+      <Handwrite lines={["маған жазыңыз"]} size={80} delay={50} speed={1.2} />
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
         <div style={{ position: "relative", transform: `scale(${pill * pulse})`, opacity: Math.min(1, pill * 2) }}>
           {f > 80 && <div style={{ position: "absolute", inset: -ring * 22, borderRadius: 60, border: `2px solid ${GOLD}`, opacity: 1 - ring }} />}
-          <div style={{ background: GOLD, color: "#FFFCF7", borderRadius: 60, padding: "16px 46px", fontFamily: BODY,
-            fontWeight: 500, fontSize: 36, letterSpacing: "0.12em" }}>@araidan_syi</div>
+          <div style={{ background: GOLD, color: "#FFFCF7", borderRadius: 60, padding: "12px 38px", fontFamily: BODY,
+            fontWeight: 500, fontSize: 30, letterSpacing: "0.12em" }}>@araidan_syi</div>
         </div>
       </div>
     </Card>
@@ -262,13 +264,11 @@ const Sound: React.FC = () => {
   const sh = (at: number, v = 0.24) => <Sequence key={`sh${at}`} from={at} durationInFrames={2 * fps}><Audio src={staticFile("audio/shimmer.wav")} volume={v} /></Sequence>;
   return (
     <>
-      <Audio src={staticFile("audio/music.wav")} volume={vol} />
+      <Audio src={staticFile("audio/music2.wav")} volume={vol} />
       <Audio src={staticFile("audio/air.wav")} volume={0.05} />
       {[0, 38, 56, 82, 130].map((a) => sw(a, 0.2))}
       {sh(32, 0.2)}{sh(116)}
       {SHOTS.filter((s) => ["iris", "slice", "whip", "spin"].includes(s.enter)).map((s) => sw(s.at - OVER + 2))}
-      {SHOTS.filter((s) => s.enter === "cut").map((s) => sw(s.at - 2, 0.14))}
-      {[402, 424, 446].map((a) => sh(a, 0.1))}
       {sh(690)}{sh(760)}
     </>
   );
@@ -292,24 +292,24 @@ export const TargetAd2: React.FC = () => (
     {/* phrase cards */}
     <Sequence from={156} durationInFrames={134}>
       <Card enter="rise" len={134}>
-        <Words lines={["Сіздің мерекеңіздің", "сәнін келтіретін"]} size={42} delay={8} />
+        <Words lines={["Сіздің мерекеңіздің", "сәнін келтіретін"]} size={34} delay={8} />
         <div style={{ height: 8 }} />
-        <Words lines={["ерекше бонбоньерки", "ұсынамыз!"]} size={96} italic delay={20} />
+        <Words lines={["ерекше бонбоньерки", "ұсынамыз!"]} size={72} italic delay={20} />
       </Card>
     </Sequence>
     <Sequence from={304} durationInFrames={96}>
       <Card enter="flip" len={96}>
-        <Words lines={["Әр тапсырысты сіздің", "қалауыңызға сай"]} size={42} delay={8} per={2} />
+        <Words lines={["Әр тапсырысты сіздің", "қалауыңызға сай"]} size={34} delay={8} per={2} />
         <div style={{ height: 8 }} />
-        <Words lines={["жеке дизайнмен", "дайындаймыз."]} size={96} italic delay={18} />
+        <Words lines={["жеке дизайнмен", "дайындаймыз."]} size={72} italic delay={18} />
       </Card>
     </Sequence>
     <Sequence from={402} durationInFrames={142}><BeatTags len={142} /></Sequence>
     <Sequence from={552} durationInFrames={134}>
-      <Card enter="slide" len={134}>
-        <Words lines={["Әрбір бұйымды", "үлкен ықыласпен,"]} size={42} delay={10} />
+      <Card enter="slide" len={134} pos="bottom">
+        <Words lines={["Әрбір бұйымды", "үлкен ықыласпен,"]} size={34} delay={10} />
         <div style={{ height: 8 }} />
-        <Words lines={["әрбір бөлшегіне", "мән беріп жасаймыз."]} size={96} italic delay={22} />
+        <Words lines={["әрбір бөлшегіне", "мән беріп жасаймыз."]} size={72} italic delay={22} />
       </Card>
     </Sequence>
     <Sequence from={698}><Cta /></Sequence>

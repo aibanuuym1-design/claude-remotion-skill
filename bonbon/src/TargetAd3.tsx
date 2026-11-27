@@ -81,7 +81,7 @@ type CardIn = "rise" | "flip" | "unfold" | "slide";
 // Ivory card with gold frame; several entrance styles; soft exit.
 // Compact card kept to the top (or bottom) band so the bonbonnieres stay visible.
 const Card: React.FC<{ enter: CardIn; len: number; children: React.ReactNode; width?: number; pos?: "top" | "bottom" }> =
-({ enter, len, children, width, pos = "top" }) => {
+({ enter, len, children, width, pos = "bottom" }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const s = spring({ frame: f, fps, config: { damping: 17, stiffness: 120, mass: 0.8 } });
@@ -94,7 +94,7 @@ const Card: React.FC<{ enter: CardIn; len: number; children: React.ReactNode; wi
   };
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: pos === "top" ? "flex-start" : "flex-end",
-      paddingTop: pos === "top" ? 290 : 0, paddingBottom: pos === "bottom" ? 700 : 0 }}>
+      paddingTop: pos === "top" ? 290 : 0, paddingBottom: pos === "bottom" ? 690 : 0 }}>
       <div style={{ position: "relative", width, maxWidth: 880, background: CARD, borderRadius: 12, padding: "40px 50px 34px",
         boxShadow: "0 24px 60px rgba(120,80,60,0.18)", opacity: Math.min(1, s * 2) * (1 - out),
         transform: `${tr[enter]} translateY(${-out * 40}px) scale(${1 - out * 0.05})`, transformOrigin: enter === "unfold" ? "50% 0%" : "50% 50%" }}>
@@ -199,9 +199,9 @@ const BeatTags: React.FC<{ len: number }> = ({ len }) => {
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: 1 - merge, transform: `scale(${1 - merge * 0.2})` }}>
-        <Tag text="Түсі," rot={-6} x={300} y={380} delay={0} />
-        <Tag text="пішіні," rot={5} x={770} y={510} delay={20} />
-        <Tag text="безендірілуі —" rot={-3} x={450} y={650} delay={40} />
+        <Tag text="Түсі," rot={-6} x={300} y={940} delay={0} />
+        <Tag text="пішіні," rot={5} x={770} y={1050} delay={20} />
+        <Tag text="безендірілуі —" rot={-3} x={450} y={1165} delay={40} />
       </AbsoluteFill>
       <Sequence from={60}>
         <Card enter="rise" len={len - 60}>
@@ -281,12 +281,17 @@ const Sound: React.FC = () => {
 
 export const TargetAd3: React.FC = () => (
   <AbsoluteFill style={{ background: "#FFFBF5" }}>
-    {SHOTS.map((s, i) => {
-      const lead = s.enter === "open" || s.enter === "cut" ? 0 : OVER;
-      const next = SHOTS[i + 1];
-      const tail = next && next.enter !== "cut" ? OVER : 0;
-      return <Sequence key={i} from={s.at - lead} durationInFrames={s.len + lead + tail}><Shot s={s} /></Sequence>;
-    })}
+    {/* footage lifted ~125px so the products sit above the bottom text band */}
+    <AbsoluteFill style={{ transform: "scale(1.14) translateY(-110px)" }}>
+      {SHOTS.map((s, i) => i === 0 ? null : (() => {
+        const lead = s.enter === "open" || s.enter === "cut" ? 0 : OVER;
+        const next = SHOTS[i + 1];
+        const tail = next && next.enter !== "cut" ? OVER : 0;
+        return <Sequence key={i} from={s.at - lead} durationInFrames={s.len + lead + tail}><Shot s={s} /></Sequence>;
+      })())}
+    </AbsoluteFill>
+    {/* the 1s hook stays unlifted (no text over it) */}
+    <Sequence from={0} durationInFrames={SHOTS[0].len}><Shot s={SHOTS[0]} /></Sequence>
     {SHOTS.filter((s) => s.enter === "flash").map((s) => (
       <Sequence key={`fl${s.at}`} from={s.at - OVER + 4} durationInFrames={26}><Flash /></Sequence>
     ))}
@@ -295,7 +300,7 @@ export const TargetAd3: React.FC = () => (
     {[2, 180, 432, 524].map((at) => <Sequence key={`swp${at}`} from={at} durationInFrames={34}><Sweep /></Sequence>)}
     <Sequence from={96} durationInFrames={504}><Sparkles n={14} /></Sequence>
 
-    {/* phrase cards — all inside the Reels safe zone (y 270…1250) */}
+    {/* phrase cards — at the bottom of the Reels safe zone (bottom edge ≤ y 1230, above caption/CTA UI) */}
     <Sequence from={106} durationInFrames={122}>
       <Card enter="rise" len={122}>
         <Words lines={["Сіздің мерекеңіздің", "сәнін келтіретін"]} size={34} delay={4} per={2} />

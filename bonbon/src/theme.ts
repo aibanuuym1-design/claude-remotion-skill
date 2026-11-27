@@ -12,14 +12,16 @@ if (typeof document !== "undefined" && !document.getElementById("bonbon-fonts"))
   const h = delayRender("local fonts");
   const faces = ["400 20px 'Cormorant Garamond'", "500 20px 'Cormorant Garamond'", "italic 400 20px 'Cormorant Garamond'",
     "italic 500 20px 'Cormorant Garamond'", "400 20px 'Playfair Display'", "italic 400 20px 'Playfair Display'",
-    "400 20px 'Manrope'", "500 20px 'Manrope'"];
-  Promise.all(faces.map((f) => document.fonts.load(f, "Бб Aa"))).then(() => continueRender(h), () => continueRender(h));
+    "400 20px 'Manrope'", "500 20px 'Manrope'", "400 20px 'Bad Script'"];
+  Promise.all(faces.map((f) => document.fonts.load(f, "Бб Aa әғқңөұүі"))).then(() => continueRender(h), () => continueRender(h));
 }
 
 export const fonts = {
   cormorant: "'Cormorant Garamond', serif",
   playfair: "'Playfair Display', serif",
   sans: "'Manrope', sans-serif",
+  // handwritten face — the only Google script font with full Kazakh glyphs (ә ғ қ ң ө ұ ү і)
+  script: "'Bad Script', cursive",
 };
 
 // Three calm palettes — one per style sample.

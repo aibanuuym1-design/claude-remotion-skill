@@ -1,9 +1,9 @@
-// Dynamic, elegant deep-house bed (~30s). Bar length 2.04s so the drop lands on 10.2s ("ғарышқа").
-// Bars 0–4 groove, bar 4 end: snare build, bar 5–11 full drop, bars 12–13 night (filtered, no kick), bar 14 final hit.
+// Energetic but calm bed (~30s), ~112 BPM: soft four-on-the-floor, offbeat hats, warm bass + chords, light arp.
+// No claps, no builds. Section from 24s ("түндер") is filtered without kick; soft hit at the end.
 import { writeFileSync, mkdirSync } from "node:fs";
 const SR = 44100, DUR = 30.4, N = Math.round(DUR * SR);
 const L = new Float32Array(N), R = new Float32Array(N);
-const bar = 2.04, beat = bar / 4;
+const bar = 60 / 112 * 4, beat = bar / 4;
 const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
 let seed = 3; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647) * 2 - 1;
 const put = (i, s, pan = 0) => { if (i >= 0 && i < N) { L[i] += s * (1 - pan); R[i] += s * (1 + pan); } };
@@ -27,20 +27,18 @@ const prog = [[38, [62, 65, 69, 72]], [34, [62, 65, 70, 74]], [41, [60, 65, 69, 
 const arp = [0, 2, 1, 3, 2, 1, 3, 2];
 for (let b = 0; b * bar < DUR - 0.5; b++) {
   const t0 = b * bar, [root, ch] = prog[b % 4];
-  const night = b === 12 || b === 13, intro = b < 5, end = b >= 14;
-  if (end) { kick(t0, 1.1); stab(t0, ch, 1.6, 1.4, 0.12); bass(t0, root, 1.2); clap(t0, 0.8); break; }
+  const night = t0 >= 23.9 && t0 < 28.0, intro = b < 2, end = t0 >= 28.0;
+  if (end) { kick(t0, 0.6); stab(t0, ch, 1.8, 1.0, 0.05); bass(t0, root, 1.4, 0.6); break; }
   for (let k = 0; k < 4; k++) {
     const tb = t0 + k * beat;
-    if (!night) kick(tb, k === 0 ? 1 : 0.9);
-    if (!night && (k === 1 || k === 3)) clap(tb, intro ? 0.7 : 1);
-    hat(tb + beat / 2, night ? 0.5 : 1, !intro && !night);
-    if (!intro && !night) { hat(tb + beat / 4, 0.45); hat(tb + 3 * beat / 4, 0.45); }
-    if (!night) bass(tb + beat / 2, root + (k === 3 ? 12 : 0), beat * 0.42, intro ? 0.85 : 1);
-    stab(tb + beat / 2 + (k % 2 ? beat / 4 : 0), ch, 0.35, night ? 0.7 : 1, night ? 0.03 : intro ? 0.05 : 0.09);
+    if (!night) kick(tb, 0.55);
+    if (!night && (k === 1 || k === 3)) clap(tb, 0.22);
+    hat(tb + beat / 2, night ? 0.35 : 0.6);
+    if (!night) bass(tb + beat / 2, root, beat * 0.4, 0.7);
+    stab(tb + beat / 2, ch, 0.5, night ? 0.6 : 0.75, night ? 0.025 : 0.04);
   }
-  if (!intro) for (let s = 0; s < 8; s++) pluck(t0 + s * beat / 2, ch[arp[s]] + 12, night ? 0.6 : 1);
-  if (night) bass(t0, root, bar * 0.95, 0.6);
-  if (b === 4) for (let s = 0; s < 8; s++) clap(t0 + 2 * beat + s * beat / 4, 0.25 + s * 0.1); // build into the drop
+  if (!intro) for (let s2 = 0; s2 < 8; s2++) pluck(t0 + s2 * beat / 2, ch[arp[s2]] + 12, night ? 0.4 : 0.55);
+  if (night) bass(t0, root, bar * 0.95, 0.5);
 }
 const d = Math.round(beat * 0.75 * SR); // ping-pong delay
 for (let i = d; i < N; i++) { L[i] += R[i - d] * 0.18; R[i] += L[i - d] * 0.18; }
@@ -49,7 +47,7 @@ const buf = Buffer.alloc(44 + N * 4);
 buf.write("RIFF", 0); buf.writeUInt32LE(36 + N * 4, 4); buf.write("WAVEfmt ", 8); buf.writeUInt32LE(16, 16); buf.writeUInt16LE(1, 20); buf.writeUInt16LE(2, 22);
 buf.writeUInt32LE(SR, 24); buf.writeUInt32LE(SR * 4, 28); buf.writeUInt16LE(4, 32); buf.writeUInt16LE(16, 34); buf.write("data", 36); buf.writeUInt32LE(N * 4, 40);
 for (let i = 0; i < N; i++) { const t = i / SR, fade = Math.min(1, t / 0.05, (DUR - t) / 1.0);
-  buf.writeInt16LE(Math.round(Math.tanh(L[i] / pk * 1.4) * 0.85 * fade * 32767), 44 + i * 4); buf.writeInt16LE(Math.round(Math.tanh(R[i] / pk * 1.4) * 0.85 * fade * 32767), 46 + i * 4); }
+  buf.writeInt16LE(Math.round(Math.tanh(L[i] / pk * 1.1) * 0.85 * fade * 32767), 44 + i * 4); buf.writeInt16LE(Math.round(Math.tanh(R[i] / pk * 1.1) * 0.85 * fade * 32767), 46 + i * 4); }
 mkdirSync(new URL("../public/music/", import.meta.url), { recursive: true });
 writeFileSync(new URL("../public/music/bed.wav", import.meta.url), buf);
 console.log("music ok");

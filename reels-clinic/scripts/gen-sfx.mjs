@@ -45,3 +45,8 @@ make("shimmer.wav", 1.5, (x, N) => { const fs = [2349, 2793, 3136, 3520, 4186]; 
 make("swell.wav", 2.6, (x, N) => { for (const f of [110, 164.8, 220, 277.2, 329.6]) for (const d of [0.998, 1.002]) { let ph = rnd() * 3;
   for (let i = 0; i < N; i++) { const t = i / SR; ph += 2 * Math.PI * f * d / SR; x[i] += Math.sin(ph) * Math.min(1, t / 0.8) * Math.min(1, (2.6 - t) / 1.2); } } });
 console.log("sfx ok");
+// fire: soft whoosh ignition + crackle, 2.5s
+make("fire.wav", 2.5, (x, N) => { let lp = 0; for (let i = 0; i < N; i++) { const t = i / SR;
+  lp += 0.04 * (rnd() - lp); const swell = Math.min(1, t / 0.25) * Math.min(1, (2.5 - t) / 1.2);
+  x[i] = lp * 2.2 * swell + (Math.random() < 0.0009 ? rnd() * 0.8 : 0); }
+  for (let i = 1; i < N; i++) x[i] = x[i] * 0.7 + x[i - 1] * 0.3; });

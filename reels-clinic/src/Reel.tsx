@@ -17,15 +17,16 @@ const BEATS: Beat[] = [
   { from: 13.25, to: 15.3, lines: ["CO2 лазер"], accent: 0, fx: "laser" },
   { from: 19.0, to: 20.45, lines: ["точка G"], accent: 0 },
   { from: 21.0, to: 22.45, lines: ["плазма"], accent: 0 },
+  { from: 24.0, to: 25.6, lines: ["от түндер"], accent: 0 },
   { from: 26.2, to: 28.15, lines: ["шоқ түндер", "сізді күтеді"], accent: 0 },
   { from: 28.25, to: 29.63, lines: ["CO2", "кейін"], accent: 0, fx: "end" },
 ];
 
 // [time, file, volume] — only on the main hooks
 const SFX: [number, string, number][] = [
-  [0.05, "boom", 0.4], [2.0, "whoosh", 0.3], [5.0, "heart", 0.45], [10.2, "whoosh", 0.35], [13.2, "laser", 0.25], [28.2, "boom", 0.35],
+  [0.05, "boom", 0.4], [2.0, "whoosh", 0.3], [5.0, "heart", 0.45], [10.2, "whoosh", 0.35], [23.95, "fire", 0.35], [13.2, "laser", 0.25], [28.2, "boom", 0.35],
 ];
-const MUSIC_VOL = 0.11;
+const MUSIC_VOL = 0.075;
 
 // hits → flash + shake (seconds, strength)
 const HITS: [number, number][] = [[0.1, 0.7], [10.2, 0.6], [28.25, 0.7]];
@@ -207,6 +208,42 @@ const Laser: React.FC = () => {
   );
 };
 
+// fire: flames rising along both side edges + embers ("от түндер" → "шоқ түндер")
+const Fire: React.FC<{ dur: number }> = ({ dur }) => {
+  const f = useCurrentFrame();
+  const a = interpolate(f, [0, 10, dur - 12, dur], [0, 1, 1, 0], C);
+  const flame = interpolate(f, [0, 8, fr(1.5), fr(2.4)], [0, 1, 1, 0.35], C); // flames calm down into embers
+  const tongues: React.ReactNode[] = [];
+  for (const side of [0, 1]) {
+    for (let i = 0; i < 120; i++) {
+      const L = 16 + random(`L${side}${i}`) * 16;
+      const age = (f + random(`o${side}${i}`) * L) % L, k = age / L;
+      const d = random(`bx${side}${i}`); // 0 = at the edge, 1 = inward
+      const bx = side === 0 ? -40 + d * 300 : 1120 - d * 300;
+      const h = (700 + (1 - d) * 600 + random(`h${side}${i}`) * 300) * flame;
+      const y = 1960 - k * h;
+      const x = bx + Math.sin(f / 4 + i * 1.7) * 22 * k + (side === 0 ? 1 : -1) * k * 30;
+      const r = (70 + random(`r${side}${i}`) * 90) * (1 - k * 0.8);
+      const col = k < 0.18 ? "255,245,215" : k < 0.45 ? "255,180,80" : k < 0.75 ? "245,110,45" : "190,50,30";
+      tongues.push(<div key={`${side}-${i}`} style={{ position: "absolute", left: x - r / 2, top: y - r, width: r, height: r * 2, borderRadius: "50% 50% 45% 45%",
+        background: `radial-gradient(ellipse at 50% 60%, rgba(${col},${0.9 * Math.pow(1 - k, 0.6)}), transparent 68%)` }} />);
+    }
+  }
+  return (
+    <AbsoluteFill style={{ opacity: a, mixBlendMode: "screen" }}>
+      <AbsoluteFill style={{ filter: "blur(9px)" }}>{tongues}</AbsoluteFill>
+      <AbsoluteFill style={{ background: `radial-gradient(ellipse at 0% 100%, rgba(255,120,50,${0.45 * flame}), transparent 55%), radial-gradient(ellipse at 100% 100%, rgba(255,120,50,${0.45 * flame}), transparent 55%)` }} />
+      {new Array(50).fill(0).map((_, i) => {
+        const sp = 4 + random(`es${i}`) * 7, x0 = random(`ex${i}`) * 1080;
+        const y = 1950 - ((f * sp + random(`ey${i}`) * 1950) % 1950);
+        const r = 3 + random(`er${i}`) * 4, tw = 0.5 + 0.5 * Math.sin(f / 3 + i);
+        return <div key={i} style={{ position: "absolute", left: x0 + Math.sin(f / 12 + i) * 30, top: y, width: r, height: r, borderRadius: r,
+          background: "rgb(255,190,110)", opacity: tw }} />;
+      })}
+    </AbsoluteFill>
+  );
+};
+
 // night: stars + moon glow
 const Night: React.FC<{ a: number }> = ({ a }) => {
   const f = useCurrentFrame();
@@ -252,6 +289,7 @@ export const Reel: React.FC<{ variant: Variant }> = ({ variant }) => {
       {seq(10.2, 13.15, <Warp dur={fr(2.95)} />)}
       {seq(5.0, 7.3, <ECG />)}
       {seq(13.2, 14.1, <Laser />)}
+      {seq(23.95, 28.2, <Fire dur={fr(4.25)} />)}
       {BEATS.map((b, i) => seq(b.from, b.to, <Keyword {...b} v={variant} night={night} />, i))}
       <Flash />
       <Audio src={staticFile("music/bed.wav")} volume={(fq) => MUSIC_VOL * interpolate(fq, [0, 3, 870, 889], [0, 1, 1, 0], C)} />

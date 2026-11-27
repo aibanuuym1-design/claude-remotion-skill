@@ -1,6 +1,8 @@
 import React from "react";
 import { Composition, Series } from "remotion";
 import { KzPair } from "./KzTest";
+import { FontSample } from "./FontSamples";
+import { TARGET2_DURATION, TargetAd2 } from "./TargetAd2";
 import { TARGET_DURATION, TargetAd } from "./TargetAd";
 import { TgStyleArch, TgStyleCinema, TgStyleRhythm } from "./Target";
 import { AdKz, KZ_DURATION } from "./AdKz";
@@ -22,6 +24,10 @@ export const Root: React.FC = () => (
     <Composition id="Real-Hook" component={RealHook} {...v} />
     <Composition id="Real-Mirror" component={RealArch} {...v} defaultProps={{ src: "real/mirror-1.jpg", title: "Бонбоньерки", sub: "на свадьбу и қыз ұзату", tag: "ИМЕННЫЕ ЗЕРКАЛЬЦА", pos: "50% 40%" }} />
     <Composition id="Real-End" component={RealEnd} {...v} />
+    {(["playfair", "cormorant", "yeseva", "oldstd"] as const).map((k) => (
+      <Composition key={k} id={`Font-${k}`} component={FontSample} {...v} durationInFrames={1} defaultProps={{ pair: k }} />
+    ))}
+    <Composition id="TargetAdKz2" component={TargetAd2} {...v} durationInFrames={TARGET2_DURATION} />
     <Composition id="TargetAdKz" component={TargetAd} {...v} durationInFrames={TARGET_DURATION} />
     <Composition id="Tg-StyleA-Cinema" component={TgStyleCinema} {...v} durationInFrames={140} />
     <Composition id="Tg-StyleB-Arch" component={TgStyleArch} {...v} durationInFrames={140} />

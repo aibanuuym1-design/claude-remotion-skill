@@ -19,9 +19,9 @@ const FORUM = "'Prata', 'Forum', serif";
 
 // ───────────────────────── footage ─────────────────────────
 type Enter = "open" | "cut" | "iris" | "slice" | "flash" | "whip" | "spin";
-type ShotDef = { at: number; len: number; enter: Enter; video?: string; image?: string; start?: number; rate?: number;
+export type ShotDef = { at: number; len: number; enter: Enter; video?: string; image?: string; start?: number; rate?: number;
   from?: number; to?: number; origin?: string; iris?: [number, number] };
-const OVER = 16; // frames an animated entrance overlaps the previous shot
+export const OVER = 16; // frames an animated entrance overlaps the previous shot
 
 const SHOTS: ShotDef[] = [
   { at: 0, len: 128, enter: "open", video: "w9088", start: 1.0, rate: 0.5, from: 1.12, to: 1.02, origin: "35% 55%" },
@@ -52,7 +52,7 @@ const Media: React.FC<{ s: ShotDef }> = ({ s }) => {
     : <Img src={staticFile(s.image!)} style={style} />;
 };
 
-const Shot: React.FC<{ s: ShotDef }> = ({ s }) => {
+export const Shot: React.FC<{ s: ShotDef }> = ({ s }) => {
   const f = useCurrentFrame();
   const t = interpolate(f, [0, OVER], [0, 1], { ...clamp, easing: ease.inOut });
   const full: React.CSSProperties = { overflow: "hidden" };
@@ -92,14 +92,14 @@ const Shot: React.FC<{ s: ShotDef }> = ({ s }) => {
 };
 
 // Soft white bloom (for "flash" entrances).
-const Flash: React.FC = () => {
+export const Flash: React.FC = () => {
   const f = useCurrentFrame();
   return <AbsoluteFill style={{ background: "#FFFBF5", pointerEvents: "none",
     opacity: interpolate(f, [0, 6, 22], [0, 0.95, 0], { ...clamp, easing: ease.out }) }} />;
 };
 
 // Diagonal band of light sweeping across the whole frame.
-const Sweep: React.FC<{ dur?: number }> = ({ dur = 30 }) => {
+export const Sweep: React.FC<{ dur?: number }> = ({ dur = 30 }) => {
   const f = useCurrentFrame();
   const x = interpolate(f, [0, dur], [-60, 160], { ...clamp, easing: ease.inOut });
   return <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "soft-light",
@@ -108,7 +108,7 @@ const Sweep: React.FC<{ dur?: number }> = ({ dur = 30 }) => {
 
 // Elegant gold / blush confetti burst (the 🎉 of phrase 1, done calmly).
 const COLORS = ["#C9A55C", "#E3C78A", "#E8B7B5", "#F4E6CF", "#B8955A"];
-const Confetti: React.FC<{ x: number; y: number; n?: number }> = ({ x, y, n = 70 }) => {
+export const Confetti: React.FC<{ x: number; y: number; n?: number }> = ({ x, y, n = 70 }) => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -129,7 +129,7 @@ const Confetti: React.FC<{ x: number; y: number; n?: number }> = ({ x, y, n = 70
 };
 
 // Slow drifting golden sparkles for the finale.
-const Sparkles: React.FC<{ n?: number }> = ({ n = 26 }) => {
+export const Sparkles: React.FC<{ n?: number }> = ({ n = 26 }) => {
   const f = useCurrentFrame();
   return <AbsoluteFill style={{ pointerEvents: "none" }}>{Array.from({ length: n }).map((_, i) => {
     const x = random(`sx${i}`) * 1080, y0 = random(`sy${i}`) * 1920, sz = 4 + random(`ss${i}`) * 8;

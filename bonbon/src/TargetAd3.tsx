@@ -193,53 +193,48 @@ const Tag: React.FC<{ text: string; rot: number; x: number; y: number; delay: nu
     </div>
   );
 };
-const BeatTags: React.FC<{ len: number }> = ({ len }) => {
+// One short phrase at a time: a small one-line ivory label at the bottom of the Reels safe zone.
+const SAFE_BOTTOM = 690; // keep clear of caption / CTA button (bottom 35%)
+const Chunk: React.FC<{ text: string; len: number; dir: number }> = ({ text, len, dir }) => {
   const f = useCurrentFrame();
-  const merge = interpolate(f, [54, 66], [0, 1], { ...clamp, easing: ease.in });
+  const { fps } = useVideoConfig();
+  const s = spring({ frame: f, fps, config: { damping: 15, stiffness: 170, mass: 0.6 } });
+  const out = interpolate(f, [len - 6, len], [0, 1], { ...clamp, easing: ease.in });
   return (
-    <AbsoluteFill>
-      <AbsoluteFill style={{ opacity: 1 - merge, transform: `scale(${1 - merge * 0.2})` }}>
-        <Tag text="Түсі," rot={-6} x={300} y={940} delay={0} />
-        <Tag text="пішіні," rot={5} x={770} y={1050} delay={20} />
-        <Tag text="безендірілуі —" rot={-3} x={450} y={1165} delay={40} />
-      </AbsoluteFill>
-      <Sequence from={60}>
-        <Card enter="rise" len={len - 60}>
-          <Words lines={["Түсі, пішіні, безендірілуі —"]} size={34} per={2} />
-          <div style={{ height: 14 }} />
-          <Words lines={["барлығы сіздің", "таңдауыңыз бойынша!"]} size={72} italic delay={6} per={2} />
-        </Card>
-      </Sequence>
+    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: SAFE_BOTTOM }}>
+      <div style={{ position: "relative", background: CARD, borderRadius: 10, padding: "10px 38px 6px",
+        boxShadow: "0 14px 34px rgba(120,80,60,0.16)", opacity: Math.min(1, s * 1.6) * (1 - out),
+        transform: `translateX(${(1 - s) * dir * 60}px) scale(${0.88 + 0.12 * s - out * 0.04})`, filter: `blur(${(1 - Math.min(1, s)) * 6 + out * 4}px)` }}>
+        <div style={{ position: "absolute", inset: 6, border: `1.4px solid ${GOLD}`, borderRadius: 6 }} />
+        <div style={{ fontFamily: SCRIPT, fontSize: 70, lineHeight: 1.3, color: INK, whiteSpace: "nowrap" }}>{text}</div>
+      </div>
     </AbsoluteFill>
   );
 };
 
-// ───────────────────────── finale ─────────────────────────
+// Final label: logo + «маған жазыңыз» + handle button, compact.
 const Cta: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const logo = spring({ frame: f - 6, fps, config: { damping: 12, stiffness: 110, mass: 0.8 } });
-  const pill = spring({ frame: f - 40, fps, config: { damping: 12, stiffness: 120 } });
-  const pulse = 1 + Math.max(0, Math.sin((f - 48) / 7)) * 0.04 * (f > 48 ? 1 : 0);
-  const ring = ((f - 48) % 30) / 30;
+  const s = spring({ frame: f, fps, config: { damping: 15, stiffness: 140, mass: 0.7 } });
+  const pill = spring({ frame: f - 14, fps, config: { damping: 12, stiffness: 120 } });
+  const pulse = 1 + Math.max(0, Math.sin((f - 22) / 7)) * 0.04 * (f > 22 ? 1 : 0);
+  const ring = ((f - 22) % 30) / 30;
   return (
-    <Card enter="unfold" len={9999} width={800}>
-      <div style={{ display: "flex", justifyContent: "center", opacity: Math.min(1, logo * 1.4),
-        transform: `scale(${0.6 + 0.4 * logo})` }}>
-        <Img src={staticFile("real/logo.png")} style={{ width: 380 }} />
-      </div>
-      <div style={{ height: 16 }} />
-      <Words lines={["Қонақтарыңызға ерекше", "естелік сыйлағыңыз келсе,"]} size={34} delay={12} per={2} />
-      <div style={{ height: 6 }} />
-      <Handwrite lines={["маған жазыңыз"]} size={80} delay={24} speed={0.9} />
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
-        <div style={{ position: "relative", transform: `scale(${pill * pulse})`, opacity: Math.min(1, pill * 2) }}>
-          {f > 48 && <div style={{ position: "absolute", inset: -ring * 22, borderRadius: 60, border: `2px solid ${GOLD}`, opacity: 1 - ring }} />}
-          <div style={{ background: GOLD, color: "#FFFCF7", borderRadius: 60, padding: "12px 38px", fontFamily: BODY,
-            fontWeight: 500, fontSize: 30, letterSpacing: "0.12em" }}>@araidan_syi</div>
+    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: SAFE_BOTTOM }}>
+      <div style={{ position: "relative", background: CARD, borderRadius: 12, padding: "26px 54px 22px", display: "flex",
+        flexDirection: "column", alignItems: "center", boxShadow: "0 18px 40px rgba(120,80,60,0.18)",
+        opacity: Math.min(1, s * 1.6), transform: `translateY(${(1 - s) * 60}px) scale(${0.9 + 0.1 * s})` }}>
+        <div style={{ position: "absolute", inset: 8, border: `1.4px solid ${GOLD}`, borderRadius: 7 }} />
+        <Img src={staticFile("real/logo.png")} style={{ width: 300 }} />
+        <Handwrite lines={["маған жазыңыз"]} size={66} delay={4} speed={0.6} />
+        <div style={{ position: "relative", marginTop: 8, transform: `scale(${pill * pulse})`, opacity: Math.min(1, pill * 2) }}>
+          {f > 22 && <div style={{ position: "absolute", inset: -ring * 18, borderRadius: 60, border: `2px solid ${GOLD}`, opacity: 1 - ring }} />}
+          <div style={{ background: GOLD, color: "#FFFCF7", borderRadius: 60, padding: "8px 30px", fontFamily: BODY,
+            fontWeight: 500, fontSize: 26, letterSpacing: "0.12em" }}>@araidan_syi</div>
         </div>
       </div>
-    </Card>
+    </AbsoluteFill>
   );
 };
 
@@ -250,15 +245,25 @@ const SHOTS: ShotDef[] = [
   // 0–1s hook: bright, colourful bonbonnieres, sharp from frame 0
   { at: 0, len: 36, enter: "cut", video: "w9688", start: 5.2, rate: 0.6, from: 1.22, to: 1.04, origin: "50% 45%" },
   { at: 96, len: 74, enter: "open", video: "w9088", start: 1.0, rate: 0.5, from: 1.12, to: 1.02, origin: "35% 55%" },
-  { at: 170, len: 60, enter: "slice", video: "w9253", start: 0.4, rate: 0.6, from: 1.1, to: 1.03, origin: "50% 40%" },
-  { at: 230, len: 70, enter: "flash", video: "w9529", start: 0.3, rate: 0.6, from: 1.04, to: 1.14, origin: "45% 45%" },
-  { at: 300, len: 20, enter: "cut", video: "w9173", start: 1.2, rate: 0.6, from: 1.14, to: 1.08 },
-  { at: 320, len: 20, enter: "cut", video: "w9088", start: 7.0, rate: 0.6, from: 1.14, to: 1.08 },
-  { at: 340, len: 20, enter: "cut", video: "w9620", start: 0.3, rate: 0.6, from: 1.14, to: 1.06 },
-  { at: 360, len: 70, enter: "cut", image: "work/kemel.jpg", from: 1.16, to: 1.04, origin: "45% 55%" },
-  { at: 430, len: 50, enter: "whip", video: "w9688", start: 0.2, rate: 0.6, from: 1.04, to: 1.12, origin: "40% 40%" },
-  { at: 480, len: 36, enter: "spin", video: "w9620", start: 2.5, rate: 0.6, from: 1.55, to: 1.3, origin: "38% 62%" },
-  { at: 516, len: 84, enter: "flash", image: "work/mirrors-sun.jpg", from: 1.03, to: 1.12, origin: "60% 40%" },
+  { at: 170, len: 56, enter: "slice", video: "w9253", start: 0.4, rate: 0.6, from: 1.1, to: 1.03, origin: "50% 40%" },
+  { at: 226, len: 66, enter: "flash", video: "w9529", start: 0.3, rate: 0.6, from: 1.04, to: 1.14, origin: "45% 45%" },
+  // beat cuts, one per word «Түсі, / пішіні, / безендірілуі —»
+  { at: 292, len: 20, enter: "cut", video: "w9173", start: 1.2, rate: 0.6, from: 1.14, to: 1.08 },
+  { at: 312, len: 20, enter: "cut", video: "w9088", start: 7.0, rate: 0.6, from: 1.14, to: 1.08 },
+  { at: 332, len: 20, enter: "cut", video: "w9620", start: 0.3, rate: 0.6, from: 1.14, to: 1.06 },
+  { at: 352, len: 58, enter: "cut", image: "work/kemel.jpg", from: 1.16, to: 1.04, origin: "45% 55%" },
+  { at: 410, len: 52, enter: "whip", video: "w9688", start: 0.2, rate: 0.6, from: 1.04, to: 1.12, origin: "40% 40%" },
+  { at: 462, len: 36, enter: "spin", video: "w9620", start: 2.5, rate: 0.6, from: 1.55, to: 1.3, origin: "38% 62%" },
+  { at: 498, len: 102, enter: "flash", image: "work/mirrors-sun.jpg", from: 1.03, to: 1.12, origin: "60% 40%" },
+];
+// [text, start, length] — the client's phrases split into short pieces (words unchanged)
+const CHUNKS: [string, number, number][] = [
+  ["Сіздің мерекеңіздің", 100, 24], ["сәнін келтіретін", 124, 24], ["ерекше бонбоньерки", 148, 24], ["ұсынамыз!", 172, 24],
+  ["Әр тапсырысты сіздің", 196, 24], ["қалауыңызға сай", 220, 24], ["жеке дизайнмен", 244, 24], ["дайындаймыз.", 268, 24],
+  ["Түсі,", 292, 20], ["пішіні,", 312, 20], ["безендірілуі —", 332, 20],
+  ["барлығы сіздің", 352, 26], ["таңдауыңыз бойынша!", 378, 32],
+  ["Әрбір бұйымды", 410, 22], ["үлкен ықыласпен,", 432, 22], ["әрбір бөлшегіне", 454, 22], ["мән беріп жасаймыз.", 476, 22],
+  ["Қонақтарыңызға ерекше", 498, 24], ["естелік сыйлағыңыз келсе,", 522, 26],
 ];
 export const TARGET3_DURATION = 600;
 
@@ -273,8 +278,8 @@ const Sound: React.FC = () => {
       {[0, 38, 56, 82, 130].map((a) => sw(ENV_AT + Math.round(a / K), 0.2))}
       {sh(ENV_AT + 12, 0.2)}{sh(ENV_AT + 46)}
       {SHOTS.filter((s) => ["slice", "whip", "spin"].includes(s.enter)).map((s) => sw(s.at - OVER + 2))}
-      {[300, 320, 340].map((a) => sw(a - 2, 0.12))}
-      {sh(516)}{sh(560, 0.18)}
+      {[292, 312, 332].map((a) => sw(a - 2, 0.12))}
+      {sh(498)}{sh(548, 0.18)}
     </>
   );
 };
@@ -297,33 +302,14 @@ export const TargetAd3: React.FC = () => (
     ))}
     <Sequence from={20} durationInFrames={26}><Flash /></Sequence>
     <Grain />
-    {[2, 180, 432, 524].map((at) => <Sequence key={`swp${at}`} from={at} durationInFrames={34}><Sweep /></Sequence>)}
+    {[2, 180, 420, 510].map((at) => <Sequence key={`swp${at}`} from={at} durationInFrames={34}><Sweep /></Sequence>)}
     <Sequence from={96} durationInFrames={504}><Sparkles n={14} /></Sequence>
 
-    {/* phrase cards — at the bottom of the Reels safe zone (bottom edge ≤ y 1230, above caption/CTA UI) */}
-    <Sequence from={106} durationInFrames={122}>
-      <Card enter="rise" len={122}>
-        <Words lines={["Сіздің мерекеңіздің", "сәнін келтіретін"]} size={34} delay={4} per={2} />
-        <div style={{ height: 8 }} />
-        <Words lines={["ерекше бонбоньерки", "ұсынамыз!"]} size={72} italic delay={12} per={2} />
-      </Card>
-    </Sequence>
-    <Sequence from={232} durationInFrames={70}>
-      <Card enter="flip" len={70}>
-        <Words lines={["Әр тапсырысты сіздің", "қалауыңызға сай"]} size={34} delay={4} per={2} />
-        <div style={{ height: 8 }} />
-        <Words lines={["жеке дизайнмен", "дайындаймыз."]} size={72} italic delay={10} per={2} />
-      </Card>
-    </Sequence>
-    <Sequence from={300} durationInFrames={130}><BeatTags len={130} /></Sequence>
-    <Sequence from={436} durationInFrames={78}>
-      <Card enter="slide" len={78}>
-        <Words lines={["Әрбір бұйымды", "үлкен ықыласпен,"]} size={34} delay={4} per={2} />
-        <div style={{ height: 8 }} />
-        <Words lines={["әрбір бөлшегіне", "мән беріп жасаймыз."]} size={72} italic delay={12} per={2} />
-      </Card>
-    </Sequence>
-    <Sequence from={520}><Cta /></Sequence>
+    {/* short text labels — bottom of the Reels safe zone (bottom edge ≤ y 1230, above caption/CTA UI) */}
+    {CHUNKS.map(([t, at, len], i) => (
+      <Sequence key={`c${i}`} from={at} durationInFrames={len}><Chunk text={t} len={len} dir={i % 2 ? 1 : -1} /></Sequence>
+    ))}
+    <Sequence from={548}><Cta /></Sequence>
 
     {/* opening letter on top of the footage until it zooms away */}
     <Sequence from={ENV_AT} durationInFrames={ENV_LEN}><Envelope /></Sequence>

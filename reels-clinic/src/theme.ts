@@ -21,9 +21,9 @@ export const colors = {
 // three typography/colour systems to choose from
 export type Variant = "A" | "B" | "C";
 export const variants = {
-  A: { font: "Montserrat", weight: 800, upper: true, text: colors.ivory, accent: colors.blush, box: colors.wine, marker: null, card: null, track: "0.01em", k: 0.74 },
-  B: { font: "Onest", weight: 800, upper: false, text: colors.wineDeep, accent: colors.wine, box: null, marker: colors.blush, card: null, track: "-0.01em", k: 0.62 },
-  C: { font: "Lora", weight: 700, upper: false, text: colors.wineDeep, accent: colors.wine, box: null, marker: null, card: "rgba(255,248,242,0.9)", track: "0", k: 0.6 },
+  A: { font: "Montserrat", weight: 800, upper: true, text: colors.wineDeep, accent: colors.wine, box: null, marker: null, card: null, track: "0.02em", k: 0.76 },
+  B: { font: "Onest", weight: 800, upper: false, text: colors.wineDeep, accent: colors.wine, box: null, marker: null, card: null, track: "-0.01em", k: 0.62 },
+  C: { font: "Lora", weight: 700, upper: false, text: colors.wineDeep, accent: colors.wine, box: null, marker: null, card: null, track: "0", k: 0.6 },
 } as const;
 
 export const ease = {

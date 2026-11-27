@@ -7,46 +7,36 @@ const FPS = 30;
 const fr = (s: number) => Math.round(s * FPS);
 
 // ================= timeline (seconds, matched to the burned-in subtitles) =================
-type FX = "strike" | "ecg" | "heat" | "warp" | "laser" | "progress" | "reticle" | "rings" | "night" | "end";
+type FX = "strike" | "laser" | "end";
 type Beat = { from: number; to: number; lines: string[]; accent?: number; label?: string; fx?: FX; size?: number };
 const BEATS: Beat[] = [
   { from: 0.1, to: 1.95, lines: ["Возбуждение", "бар,"], accent: 1 },
   { from: 2.0, to: 3.35, lines: ["оргазм", "жоқ?"], accent: 1, fx: "strike" },
   { from: 6.2, to: 7.2, lines: ["оятатын"], accent: 0 },
-  { from: 7.25, to: 9.7, lines: ["сезімдерді", "лапылдататын"], accent: 1 },
   { from: 10.2, to: 13.15, lines: ["ғарышқа", "ұшыратын"], accent: 0 },
   { from: 13.25, to: 15.3, lines: ["CO2 лазер"], accent: 0, fx: "laser" },
-  { from: 16.7, to: 18.7, lines: ["қалыпқа", "келтіріп"], accent: 1, fx: "progress" },
-  { from: 19.0, to: 20.45, lines: ["точка G"], accent: 0, fx: "reticle", size: 150 },
-  { from: 21.0, to: 22.45, lines: ["плазма"], accent: 0, fx: "rings", size: 150 },
-  { from: 22.5, to: 23.75, lines: ["от боп", "лапылдайсыз"], accent: 0 },
-  { from: 24.0, to: 25.4, lines: ["от түндер"], accent: 0 },
+  { from: 19.0, to: 20.45, lines: ["точка G"], accent: 0 },
+  { from: 21.0, to: 22.45, lines: ["плазма"], accent: 0 },
   { from: 26.2, to: 28.15, lines: ["шоқ түндер", "сізді күтеді"], accent: 0 },
-  { from: 28.25, to: 29.63, lines: ["CO2", "кейін"], accent: 0, fx: "end", size: 170 },
+  { from: 28.25, to: 29.63, lines: ["CO2", "кейін"], accent: 0, fx: "end" },
 ];
 
-// [time, file, volume]
+// [time, file, volume] — only on the main hooks
 const SFX: [number, string, number][] = [
-  [0.05, "boom", 0.55], [1.9, "whoosh", 0.35], [2.0, "boom", 0.5], [2.55, "tick", 0.35],
-  [5.0, "heart", 0.6], [6.15, "heart", 0.6], [7.2, "whoosh", 0.35],
-  [9.1, "riser", 0.35], [10.2, "boom", 0.45], [10.2, "whoosh", 0.4],
-  [13.2, "laser", 0.35], [13.75, "tick", 0.3], [14.05, "tick", 0.3],
-  [16.85, "tick", 0.22], [17.15, "tick", 0.22], [17.45, "tick", 0.22], [17.75, "tick", 0.22], [18.05, "ding", 0.3],
-  [19.0, "lock", 0.45], [21.0, "shimmer", 0.4], [22.5, "boom", 0.4],
-  [23.9, "swell", 0.35], [26.15, "shimmer", 0.3], [28.2, "boom", 0.55], [28.3, "ding", 0.25],
+  [0.05, "boom", 0.4], [2.0, "whoosh", 0.3], [5.0, "heart", 0.45], [10.2, "whoosh", 0.35], [13.2, "laser", 0.25], [28.2, "boom", 0.35],
 ];
+const MUSIC_VOL = 0.08;
 
 // hits → flash + shake (seconds, strength)
-const HITS: [number, number][] = [[0.1, 1], [2.0, 1], [10.2, 0.9], [19.0, 0.5], [22.5, 0.8], [28.25, 1]];
+const HITS: [number, number][] = [[0.1, 0.7], [10.2, 0.6], [28.25, 0.7]];
 
 // camera: [t, scale, originX%, originY%]
 const CAM: [number, number, number, number][] = [
   [0, 1.12, 50, 38], [1.9, 1.04, 50, 38], [2.0, 1.04, 50, 38], [2.15, 1.16, 50, 36],
-  [3.3, 1.16, 50, 36], [3.55, 1.0, 50, 38], [5.0, 1.02, 50, 38], [6.2, 1.05, 50, 37], [6.35, 1.1, 50, 36],
-  [7.2, 1.1, 50, 36], [9.6, 1.02, 50, 40], [10.2, 1.0, 50, 40], [10.4, 1.08, 60, 30], [13.1, 1.03, 55, 36],
+  [3.3, 1.16, 50, 36], [3.55, 1.0, 50, 38], [5.0, 1.02, 50, 38], [6.2, 1.04, 50, 37], [7.2, 1.06, 50, 36], [9.6, 1.02, 50, 40], [10.2, 1.0, 50, 40], [10.4, 1.08, 60, 30], [13.1, 1.03, 55, 36],
   [13.2, 1.03, 50, 40], [13.45, 1.14, 22, 46], [15.4, 1.16, 22, 46], [15.7, 1.03, 50, 40],
-  [18.9, 1.04, 50, 38], [19.05, 1.13, 45, 36], [20.5, 1.14, 45, 36], [20.8, 1.02, 50, 40],
-  [22.4, 1.03, 50, 40], [22.55, 1.12, 48, 36], [23.8, 1.1, 48, 36], [24.05, 1.02, 50, 40], [28.1, 1.09, 50, 38],
+  [18.9, 1.04, 50, 38], [20.5, 1.08, 45, 36], [20.8, 1.02, 50, 40],
+  [22.4, 1.03, 50, 40], [24.05, 1.05, 50, 40], [28.1, 1.09, 50, 38],
   [28.25, 1.15, 50, 38], [29.7, 1.05, 50, 40],
 ];
 
@@ -86,17 +76,16 @@ const Keyword: React.FC<Beat & { v: Variant; night: number }> = ({ from, to, lin
   const exit = interpolate(f, [dur - 8, dur], [1, 0], { ...C, easing: ease.in });
   const exitY = interpolate(f, [dur - 8, dur], [0, -40], { ...C, easing: ease.in });
   const longest = Math.max(...lines.map((l) => l.length));
-  const base = size ?? 128;
-  const fs = Math.min(base, 880 / (longest * st.k));
+  const base = size ?? 92;
+  const fs = Math.min(base, 760 / (longest * st.k));
   const cardIn = spring({ frame: f, fps, config: springs.smooth });
   // in night section, dark-text variants switch to light text for contrast
-  const nightText = night > 0.5 && !st.box && !st.marker && !st.card;
-
+  
   const rendered = lines.map((line, li) => {
     const words = line.split(" ");
     const boxP = interpolate(f - li * 3, [0, 7], [0, 1], { ...C, easing: ease.out });
     const isAccent = li === accent;
-    const color = st.box ? (isAccent ? st.accent : st.text) : nightText ? colors.ivory : isAccent ? st.accent : st.text;
+    const color = night > 0.5 ? colors.ivory : isAccent ? st.accent : st.text;
     const strike = fx === "strike" && li === 0 ? interpolate(f, [16, 24], [0, 1], { ...C, easing: ease.out }) : 0;
     return (
       <div key={li} style={{ position: "relative", display: "inline-flex", gap: fs * 0.25, padding: st.box ? `${fs * 0.06}px ${fs * 0.22}px ${fs * 0.1}px` : `0 ${fs * 0.12}px` }}>
@@ -117,32 +106,13 @@ const Keyword: React.FC<Beat & { v: Variant; night: number }> = ({ from, to, lin
 
   const block = <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: st.box ? 10 : 0 }}>{rendered}</div>;
   return (
-    <AbsoluteFill style={{ alignItems: "center", paddingTop: fx === "end" ? 330 : 200, opacity: exit, transform: `translateY(${exitY}px)` }}>
+    <AbsoluteFill style={{ alignItems: "center", paddingTop: fx === "end" ? 300 : 220, opacity: exit, transform: `translateY(${exitY}px)` }}>
       {st.card ? (
         <div style={{ padding: "34px 56px 42px", background: st.card, borderRadius: 8, border: `2px solid ${colors.wine}`,
           clipPath: `inset(0 ${(1 - cardIn) * 50}% 0 ${(1 - cardIn) * 50}% round 8px)` }}>{block}</div>
       ) : block}
-      {fx === "progress" && <Progress v={v} />}
-      {fx === "laser" && <Checks v={v} />}
+            {fx === "laser" && <Checks v={v} />}
     </AbsoluteFill>
-  );
-};
-
-// ---------- progress bar: "қалыпқа келтіріп" 0 → 100%
-const Progress: React.FC<{ v: Variant }> = ({ v }) => {
-  const f = useCurrentFrame();
-  const p = interpolate(f, [6, 42], [0, 1], { ...C, easing: ease.inOut });
-  const st = variants[v];
-  return (
-    <div style={{ marginTop: 34, width: 620, display: "flex", flexDirection: "column", gap: 12, opacity: interpolate(f, [2, 10], [0, 1], C) }}>
-      <div style={{ display: "flex", justifyContent: "space-between", fontFamily: st.font, fontWeight: 700, fontSize: 30, color: colors.wineDeep }}>
-        <span style={{ background: colors.ivory, padding: "2px 10px", borderRadius: 3 }}>шырышты қабат</span>
-        <span style={{ background: colors.ivory, padding: "2px 10px", borderRadius: 3 }}>{Math.round(p * 100)}%</span>
-      </div>
-      <div style={{ height: 14, background: "rgba(255,248,242,0.75)", borderRadius: 7, overflow: "hidden" }}>
-        <div style={{ height: "100%", width: `${p * 100}%`, background: colors.wine, borderRadius: 7 }} />
-      </div>
-    </div>
   );
 };
 
@@ -152,18 +122,17 @@ const Checks: React.FC<{ v: Variant }> = ({ v }) => {
   const { fps } = useVideoConfig();
   const st = variants[v];
   return (
-    <div style={{ marginTop: 30, display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 10 }}>
       {["сужение", "омоложение"].map((w, i) => {
         const s = spring({ frame: f - 14 - i * 9, fps, config: springs.slam });
         const d = interpolate(f, [18 + i * 9, 28 + i * 9], [1, 0], { ...C, easing: ease.out });
         return (
-          <div key={w} style={{ display: "flex", alignItems: "center", gap: 18, background: colors.ivory, padding: "10px 28px 12px 18px", borderRadius: 6,
-            opacity: s, transform: `translateX(${(1 - s) * -60}px)` }}>
-            <svg width={44} height={44} viewBox="0 0 44 44">
+          <div key={w} style={{ display: "flex", alignItems: "center", gap: 18,             opacity: s, transform: `translateX(${(1 - s) * -60}px)` }}>
+            <svg width={38} height={38} viewBox="0 0 44 44">
               <circle cx={22} cy={22} r={20} fill={colors.wine} />
               <path d="M12 23 L19 30 L32 15" fill="none" stroke={colors.ivory} strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={d} />
             </svg>
-            <span style={{ fontFamily: st.font, fontWeight: st.weight, fontSize: 50, color: colors.wineDeep, textTransform: st.upper ? "uppercase" : "none" }}>{w}</span>
+            <span style={{ fontFamily: st.font, fontWeight: st.weight, fontSize: 42, color: colors.wineDeep, textTransform: st.upper ? "uppercase" : "none" }}>{w}</span>
           </div>
         );
       })}
@@ -181,8 +150,8 @@ const Flash: React.FC = () => {
 // heartbeat ECG line across the frame (5.0 – 7.2s)
 const ECG: React.FC = () => {
   const f = useCurrentFrame();
-  const W = 1080, y = 470;
-  const beat = (x0: number) => `L${x0} ${y} L${x0 + 20} ${y - 30} L${x0 + 40} ${y + 10} L${x0 + 60} ${y - 170} L${x0 + 85} ${y + 90} L${x0 + 105} ${y} `;
+  const W = 1080, y = 560;
+  const beat = (x0: number) => `L${x0} ${y} L${x0 + 20} ${y - 30} L${x0 + 40} ${y + 10} L${x0 + 60} ${y - 120} L${x0 + 85} ${y + 70} L${x0 + 105} ${y} `;
   const d = `M0 ${y} L200 ${y} ${beat(200)} L520 ${y} ${beat(520)} L840 ${y} L${W} ${y}`;
   const p = interpolate(f, [0, 58], [0, 1], { ...C, easing: ease.inOut });
   const a = interpolate(f, [0, 6, 58, 66], [0, 1, 1, 0], C);
@@ -193,22 +162,6 @@ const ECG: React.FC = () => {
         <path d={d} fill="none" stroke={colors.blush} strokeWidth={12} pathLength={1} strokeDasharray={1} strokeDashoffset={1 - p} filter="url(#g)" opacity={0.8} />
         <path d={d} fill="none" stroke={colors.wine} strokeWidth={5} strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - p} />
       </svg>
-    </AbsoluteFill>
-  );
-};
-
-// warm light leaks drifting up ("лапылдататын", "от боп")
-const Heat: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
-  const a = interpolate(f, [0, 10, dur - 10, dur], [0, 1, 1, 0], C);
-  const blobs = [[200, 1500, 520, "rgba(255,120,80,0.55)"], [850, 1300, 460, "rgba(255,170,120,0.5)"], [500, 1750, 600, "rgba(230,80,100,0.45)"]] as const;
-  return (
-    <AbsoluteFill style={{ opacity: a, mixBlendMode: "screen" }}>
-      {blobs.map(([x, y, r, c], i) => (
-        <div key={i} style={{ position: "absolute", left: x - r / 2 + Math.sin(f / 18 + i) * 60, top: y - r / 2 - f * (3 + i), width: r, height: r, borderRadius: "50%",
-          background: `radial-gradient(circle, ${c}, transparent 70%)`, filter: "blur(20px)" }} />
-      ))}
-      <AbsoluteFill style={{ background: "linear-gradient(0deg, rgba(255,120,80,0.35), transparent 55%)" }} />
     </AbsoluteFill>
   );
 };
@@ -254,43 +207,6 @@ const Laser: React.FC = () => {
   );
 };
 
-// target reticle closing in ("точка G")
-const Reticle: React.FC = () => {
-  const f = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const s = spring({ frame: f, fps, config: springs.slam });
-  const half = interpolate(s, [0, 1], [700, 230]);
-  const cx = 540, cy = 300, L = 70;
-  const a = interpolate(f, [0, 3, 38, 43], [0, 1, 1, 0], C);
-  const corners = [[-1, -1], [1, -1], [-1, 1], [1, 1]];
-  return (
-    <AbsoluteFill style={{ opacity: a }}>
-      <svg width={1080} height={1920}>
-        {corners.map(([dx, dy], i) => {
-          const x = cx + dx * half, y = cy + dy * half * 0.62;
-          return <path key={i} d={`M${x} ${y - dy * L} L${x} ${y} L${x - dx * L} ${y}`} fill="none" stroke={colors.wine} strokeWidth={7} strokeLinecap="round" />;
-        })}
-        <circle cx={cx} cy={cy} r={half * 0.75} fill="none" stroke={colors.ivory} strokeWidth={3} opacity={0.7 * s} strokeDasharray="10 14" transform={`rotate(${f * 3} ${cx} ${cy})`} />
-      </svg>
-    </AbsoluteFill>
-  );
-};
-
-// expanding glow rings ("плазма")
-const Rings: React.FC = () => {
-  const f = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{ mixBlendMode: "screen" }}>
-      {[0, 8, 16].map((o, i) => {
-        const p = interpolate(f - o, [0, 34], [0, 1], { ...C, easing: ease.out });
-        const r = 80 + p * 900;
-        return <div key={i} style={{ position: "absolute", left: 540 - r / 2, top: 320 - r / 2, width: r, height: r, borderRadius: "50%",
-          border: `${10 - p * 8}px solid ${colors.blush}`, boxShadow: `0 0 50px ${colors.glow}, inset 0 0 50px ${colors.glow}`, opacity: (1 - p) * (f >= o ? 1 : 0) }} />;
-      })}
-    </AbsoluteFill>
-  );
-};
-
 // night: stars + moon glow
 const Night: React.FC<{ a: number }> = ({ a }) => {
   const f = useCurrentFrame();
@@ -325,7 +241,7 @@ export const Reel: React.FC<{ variant: Variant }> = ({ variant }) => {
   const f = useCurrentFrame();
   const t = f / FPS;
   const night = interpolate(t, [23.9, 24.4, 28.1, 28.3], [0, 1, 1, 0], C);
-  const heat = Math.max(interpolate(t, [7.25, 7.6, 9.4, 9.7], [0, 1, 1, 0], C), interpolate(t, [22.5, 22.7, 23.6, 23.8], [0, 1, 1, 0], C));
+  const heat = 0;
   const seq = (from: number, to: number, el: React.ReactNode, key?: string | number) =>
     <Sequence key={key} from={fr(from)} durationInFrames={fr(to - from)}>{el}</Sequence>;
   return (
@@ -333,15 +249,12 @@ export const Reel: React.FC<{ variant: Variant }> = ({ variant }) => {
       <Footage night={night} heat={heat} />
       <Grade night={night} />
       <Night a={night} />
-      {seq(7.25, 9.7, <Heat dur={fr(2.45)} />)}
-      {seq(22.5, 23.8, <Heat dur={fr(1.3)} />, "h2")}
       {seq(10.2, 13.15, <Warp dur={fr(2.95)} />)}
       {seq(5.0, 7.3, <ECG />)}
       {seq(13.2, 14.1, <Laser />)}
-      {seq(19.0, 20.45, <Reticle />)}
-      {seq(21.0, 22.45, <Rings />)}
       {BEATS.map((b, i) => seq(b.from, b.to, <Keyword {...b} v={variant} night={night} />, i))}
       <Flash />
+      <Audio src={staticFile("music/bed.wav")} volume={(fq) => MUSIC_VOL * interpolate(fq, [0, 20, 860, 889], [0, 1, 1, 0], C)} />
       <Grain />
       {SFX.map(([s, file, vol], i) => (
         <Sequence key={`a${i}`} from={fr(s)}><Audio src={staticFile(`sfx/${file}.wav`)} volume={vol} /></Sequence>

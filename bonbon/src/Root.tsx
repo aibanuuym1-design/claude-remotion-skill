@@ -1,5 +1,6 @@
 import React from "react";
 import { Composition, Series } from "remotion";
+import { RealArch, RealEnd, RealHook } from "./Real";
 import { StyleArch, StyleCatalog, StyleEditorial } from "./Styles";
 
 const v = { fps: 30, width: 1080, height: 1920, durationInFrames: 150 };
@@ -8,6 +9,9 @@ export const Root: React.FC = () => (
     <Composition id="StyleA-Arch" component={StyleArch} {...v} />
     <Composition id="StyleB-Editorial" component={StyleEditorial} {...v} />
     <Composition id="StyleC-Catalog" component={StyleCatalog} {...v} />
+    <Composition id="Real-Hook" component={RealHook} {...v} />
+    <Composition id="Real-Mirror" component={RealArch} {...v} defaultProps={{ src: "real/mirror-1.jpg", title: "Бонбоньерки", sub: "на свадьбу и қыз ұзату", tag: "ИМЕННЫЕ ЗЕРКАЛЬЦА", pos: "50% 40%" }} />
+    <Composition id="Real-End" component={RealEnd} {...v} />
     <Composition id="StylesPreview" component={Preview} {...v} durationInFrames={450} />
   </>
 );

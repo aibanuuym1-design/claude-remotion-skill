@@ -25,7 +25,7 @@ const BEATS: Beat[] = [
 const SFX: [number, string, number][] = [
   [0.05, "boom", 0.4], [2.0, "whoosh", 0.3], [5.0, "heart", 0.45], [10.2, "whoosh", 0.35], [13.2, "laser", 0.25], [28.2, "boom", 0.35],
 ];
-const MUSIC_VOL = 0.08;
+const MUSIC_VOL = 0.11;
 
 // hits → flash + shake (seconds, strength)
 const HITS: [number, number][] = [[0.1, 0.7], [10.2, 0.6], [28.25, 0.7]];
@@ -254,7 +254,7 @@ export const Reel: React.FC<{ variant: Variant }> = ({ variant }) => {
       {seq(13.2, 14.1, <Laser />)}
       {BEATS.map((b, i) => seq(b.from, b.to, <Keyword {...b} v={variant} night={night} />, i))}
       <Flash />
-      <Audio src={staticFile("music/bed.wav")} volume={(fq) => MUSIC_VOL * interpolate(fq, [0, 20, 860, 889], [0, 1, 1, 0], C)} />
+      <Audio src={staticFile("music/bed.wav")} volume={(fq) => MUSIC_VOL * interpolate(fq, [0, 3, 870, 889], [0, 1, 1, 0], C)} />
       <Grain />
       {SFX.map(([s, file, vol], i) => (
         <Sequence key={`a${i}`} from={fr(s)}><Audio src={staticFile(`sfx/${file}.wav`)} volume={vol} /></Sequence>

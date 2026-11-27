@@ -256,7 +256,7 @@ const SHOTS: ShotDef[] = [
 ];
 export const TARGET2_DURATION = 870;
 
-const Sound: React.FC = () => {
+const Sound: React.FC<{ music: boolean }> = ({ music }) => {
   const { fps } = useVideoConfig();
   const vol = (f: number) => Math.min(interpolate(f, [0, 6], [0, 0.9], clamp),
     interpolate(f, [TARGET2_DURATION - 1.5 * fps, TARGET2_DURATION], [0.9, 0], clamp));
@@ -264,7 +264,7 @@ const Sound: React.FC = () => {
   const sh = (at: number, v = 0.24) => <Sequence key={`sh${at}`} from={at} durationInFrames={2 * fps}><Audio src={staticFile("audio/shimmer.wav")} volume={v} /></Sequence>;
   return (
     <>
-      <Audio src={staticFile("audio/music2.wav")} volume={vol} />
+      {music && <Audio src={staticFile("audio/music2.wav")} volume={vol} />}
       <Audio src={staticFile("audio/air.wav")} volume={0.05} />
       {[0, 38, 56, 82, 130].map((a) => sw(a, 0.2))}
       {sh(32, 0.2)}{sh(116)}
@@ -274,7 +274,7 @@ const Sound: React.FC = () => {
   );
 };
 
-export const TargetAd2: React.FC = () => (
+export const TargetAd2: React.FC<{ music?: boolean }> = ({ music = true }) => (
   <AbsoluteFill style={{ background: "#FFFBF5" }}>
     {SHOTS.map((s, i) => {
       const lead = s.enter === "open" || s.enter === "cut" ? 0 : OVER;
@@ -316,6 +316,6 @@ export const TargetAd2: React.FC = () => (
 
     {/* opening letter on top of everything until it zooms away */}
     <Sequence from={0} durationInFrames={154}><Envelope /></Sequence>
-    <Sound />
+    <Sound music={music} />
   </AbsoluteFill>
 );

@@ -32,6 +32,7 @@ export const Root: React.FC = () => (
       <Composition key={k} id={`Sys-${k}`} component={FontSystem} {...v} durationInFrames={1} defaultProps={{ sys: k }} />
     ))}
     <Composition id="TargetAdKz2" component={TargetAd2} {...v} durationInFrames={TARGET2_DURATION} />
+    <Composition id="TargetAdKz2-Sfx" component={TargetAd2} {...v} durationInFrames={TARGET2_DURATION} defaultProps={{ music: false }} />
     <Composition id="TargetAdKz" component={TargetAd} {...v} durationInFrames={TARGET_DURATION} />
     <Composition id="Tg-StyleA-Cinema" component={TgStyleCinema} {...v} durationInFrames={140} />
     <Composition id="Tg-StyleB-Arch" component={TgStyleArch} {...v} durationInFrames={140} />

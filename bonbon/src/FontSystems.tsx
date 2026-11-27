@@ -20,6 +20,9 @@ export const SYSTEMS = {
   a: { display: "'Cormorant Garamond', serif", dW: 500, dItalic: false, dSize: 86, body: "Montserrat, sans-serif", bW: 300, bSize: 40 },
   b: { display: "'Playfair Display', serif", dW: 400, dItalic: false, dSize: 74, body: "RalewayKz, sans-serif", bW: 300, bSize: 42 },
   c: { display: "'Forum', serif", dW: 400, dItalic: false, dSize: 80, body: "RalewayKz, sans-serif", bW: 300, bSize: 42 },
+  e: { display: "'Asylbek Shelley', 'Cormorant Garamond', serif", dW: 400, dItalic: false, dSize: 92, body: "Montserrat, sans-serif", bW: 300, bSize: 38 },
+  f: { display: "'Asylbek Shelley', 'Cormorant Garamond', serif", dW: 400, dItalic: false, dSize: 92, body: "'Forum', serif", bW: 400, bSize: 44 },
+  g: { display: "'Asylbek Shelley', 'Cormorant Garamond', serif", dW: 400, dItalic: false, dSize: 92, body: "'Cormorant Garamond', serif", bW: 500, bSize: 46 },
   d: { display: "Montserrat, sans-serif", dW: 300, dItalic: false, dSize: 66, body: "Montserrat, sans-serif", bW: 300, bSize: 38 },
 } as const;
 export type SysKey = keyof typeof SYSTEMS;

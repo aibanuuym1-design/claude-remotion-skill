@@ -28,7 +28,7 @@ export const Root: React.FC = () => (
     {(["playfair", "cormorant", "yeseva", "oldstd"] as const).map((k) => (
       <Composition key={k} id={`Font-${k}`} component={FontSample} {...v} durationInFrames={1} defaultProps={{ pair: k }} />
     ))}
-    {(["a", "b", "c", "d"] as const).map((k) => (
+    {(["a", "b", "c", "d", "e", "f", "g"] as const).map((k) => (
       <Composition key={k} id={`Sys-${k}`} component={FontSystem} {...v} durationInFrames={1} defaultProps={{ sys: k }} />
     ))}
     <Composition id="TargetAdKz2" component={TargetAd2} {...v} durationInFrames={TARGET2_DURATION} />

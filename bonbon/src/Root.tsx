@@ -2,6 +2,7 @@ import React from "react";
 import { Composition, Series } from "remotion";
 import { KzPair } from "./KzTest";
 import { FontSample } from "./FontSamples";
+import { FontSystem } from "./FontSystems";
 import { TARGET2_DURATION, TargetAd2 } from "./TargetAd2";
 import { TARGET_DURATION, TargetAd } from "./TargetAd";
 import { TgStyleArch, TgStyleCinema, TgStyleRhythm } from "./Target";
@@ -26,6 +27,9 @@ export const Root: React.FC = () => (
     <Composition id="Real-End" component={RealEnd} {...v} />
     {(["playfair", "cormorant", "yeseva", "oldstd"] as const).map((k) => (
       <Composition key={k} id={`Font-${k}`} component={FontSample} {...v} durationInFrames={1} defaultProps={{ pair: k }} />
+    ))}
+    {(["a", "b", "c", "d"] as const).map((k) => (
+      <Composition key={k} id={`Sys-${k}`} component={FontSystem} {...v} durationInFrames={1} defaultProps={{ sys: k }} />
     ))}
     <Composition id="TargetAdKz2" component={TargetAd2} {...v} durationInFrames={TARGET2_DURATION} />
     <Composition id="TargetAdKz" component={TargetAd} {...v} durationInFrames={TARGET_DURATION} />

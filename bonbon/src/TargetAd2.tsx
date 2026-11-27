@@ -6,24 +6,27 @@ import { AbsoluteFill, Audio, Img, Sequence, interpolate, random, spring, static
 import { Confetti, Flash, OVER, Shot, ShotDef, Sparkles, Sweep } from "./TargetAd";
 import { Grain } from "./Layers";
 import { clamp, ease } from "./theme";
+import "./FontSystems"; // registers Montserrat
 
 const INK = "#3A2C25";
 const ACC = "#7B4E3C";
 const GOLD = "#C29B55";
 const CARD = "rgba(255,251,246,0.94)";
-const SERIF = "'Cormorant Garamond', serif";
+// Font system E: Asylbek (script, emotional lines) + Montserrat Light (quiet lines). Asylbek lacks — and …, Cormorant fills in.
+const SCRIPT = "'Asylbek Shelley', 'Cormorant Garamond', serif";
+const BODY = "Montserrat, sans-serif";
 const BLUSH = "#F1DFD6";
 
 // ───────────────────────── text pieces ─────────────────────────
 // Words rise in one by one (blur → sharp).
 const Words: React.FC<{ lines: string[]; size: number; delay?: number; per?: number; italic?: boolean; color?: string;
-  weight?: number }> = ({ lines, size, delay = 0, per = 3, italic, color = INK, weight = 500 }) => {
+  weight?: number }> = ({ lines, size, delay = 0, per = 3, italic, color = INK, weight = 300 }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   let k = 0;
   return (
-    <div style={{ fontFamily: SERIF, fontStyle: italic ? "italic" : "normal", fontWeight: weight, fontSize: size,
-      lineHeight: 1.12, color, textAlign: "center" }}>
+    <div style={{ fontFamily: italic ? SCRIPT : BODY, fontWeight: italic ? 400 : weight, fontSize: size,
+      lineHeight: italic ? 1.3 : 1.35, letterSpacing: italic ? 0 : "0.04em", color, textAlign: "center" }}>
       {lines.map((l, li) => (
         <div key={li} style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", columnGap: size * 0.25 }}>
           {l.split(" ").map((w, wi) => {
@@ -43,7 +46,7 @@ const Handwrite: React.FC<{ lines: string[]; size: number; delay?: number; speed
   const f = useCurrentFrame();
   let k = 0;
   return (
-    <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: size, lineHeight: 1.15, color, textAlign: "center" }}>
+    <div style={{ fontFamily: SCRIPT, fontWeight: 400, fontSize: size, lineHeight: 1.35, color, textAlign: "center" }}>
       {lines.map((l, li) => (
         <div key={li} style={{ whiteSpace: "pre" }}>
           {l.split("").map((c, ci) => {
@@ -129,7 +132,7 @@ const Envelope: React.FC = () => {
       transform: `scale(${scale}) rotate(${(1 - center) * -2}deg)`, transformOrigin: "50% 50%", zIndex: 3 }}>
       <GoldFrame delay={86} inset={18} />
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", padding: 40 }}>
-        <Handwrite lines={["Тойыңызға ерекше", "бір сән қосқыңыз", "келе ме?"]} size={74} delay={92} speed={0.85} />
+        <Handwrite lines={["Тойыңызға ерекше", "бір сән қосқыңыз", "келе ме?"]} size={88} delay={92} speed={0.85} />
       </AbsoluteFill>
     </div>
   );
@@ -153,8 +156,8 @@ const Envelope: React.FC = () => {
       <div style={{ ...env, transform: envMove, zIndex: 4 }}>
         <div style={{ position: "absolute", inset: 0, background: "#F7EEE4", borderRadius: 12,
           clipPath: "polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%)", boxShadow: "inset 0 0 0 1px #E6D5C3" }} />
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: 70, textAlign: "center", fontFamily: SERIF,
-          fontStyle: "italic", fontSize: 40, color: "#A58564", letterSpacing: "0.06em" }}>Araidan Syi</div>
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: 70, textAlign: "center", fontFamily: SCRIPT,
+          fontSize: 54, color: "#A58564" }}>Araidan Syi</div>
       </div>
       {flap <= 90 && <div style={{ ...env, transform: envMove, perspective: 1600, zIndex: 5 }}>
         <div style={{ position: "absolute", left: 0, top: 0, width: EW, height: EH * 0.62, background: "#F3E8DC",
@@ -182,7 +185,7 @@ const Tag: React.FC<{ text: string; rot: number; x: number; y: number; delay: nu
     <div style={{ position: "absolute", left: x, top: y, transform: `translate(-50%,-50%) scale(${s}) rotate(${rot + swing}deg)`,
       opacity: Math.min(1, s * 2), background: CARD, borderRadius: 12, padding: "26px 48px", boxShadow: "0 18px 40px rgba(120,80,60,0.18)" }}>
       <div style={{ position: "absolute", inset: 9, border: `1.5px solid ${GOLD}`, borderRadius: 7 }} />
-      <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 92, color: INK, whiteSpace: "nowrap" }}>{text}</div>
+      <div style={{ fontFamily: SCRIPT, fontSize: 104, color: INK, whiteSpace: "nowrap", lineHeight: 1.3 }}>{text}</div>
     </div>
   );
 };
@@ -198,9 +201,9 @@ const BeatTags: React.FC<{ len: number }> = ({ len }) => {
       </AbsoluteFill>
       <Sequence from={74}>
         <Card enter="rise" len={len - 74} y={260}>
-          <Words lines={["Түсі, пішіні, безендірілуі —"]} size={68} weight={600} per={2} />
+          <Words lines={["Түсі, пішіні, безендірілуі —"]} size={42} per={2} />
           <div style={{ height: 14 }} />
-          <Words lines={["барлығы сіздің", "таңдауыңыз бойынша!"]} size={76} italic color={ACC} delay={10} per={3} />
+          <Words lines={["барлығы сіздің", "таңдауыңыз бойынша!"]} size={88} italic delay={10} per={3} />
         </Card>
       </Sequence>
     </AbsoluteFill>
@@ -222,14 +225,14 @@ const Cta: React.FC = () => {
         <Img src={staticFile("real/logo.png")} style={{ width: 520 }} />
       </div>
       <div style={{ height: 30 }} />
-      <Words lines={["Қонақтарыңызға ерекше", "естелік сыйлағыңыз келсе,"]} size={64} delay={30} per={3} />
+      <Words lines={["Қонақтарыңызға ерекше", "естелік сыйлағыңыз келсе,"]} size={40} delay={30} per={3} />
       <div style={{ height: 6 }} />
-      <Handwrite lines={["маған жазыңыз"]} size={96} delay={50} speed={1.2} color={ACC} />
+      <Handwrite lines={["маған жазыңыз"]} size={104} delay={50} speed={1.2} />
       <div style={{ display: "flex", justifyContent: "center", marginTop: 34 }}>
         <div style={{ position: "relative", transform: `scale(${pill * pulse})`, opacity: Math.min(1, pill * 2) }}>
           {f > 80 && <div style={{ position: "absolute", inset: -ring * 22, borderRadius: 60, border: `2px solid ${GOLD}`, opacity: 1 - ring }} />}
-          <div style={{ background: GOLD, color: "#FFFCF7", borderRadius: 60, padding: "16px 46px", fontFamily: SERIF,
-            fontWeight: 600, fontSize: 46, letterSpacing: "0.08em" }}>@araidan_syi</div>
+          <div style={{ background: GOLD, color: "#FFFCF7", borderRadius: 60, padding: "16px 46px", fontFamily: BODY,
+            fontWeight: 500, fontSize: 36, letterSpacing: "0.12em" }}>@araidan_syi</div>
         </div>
       </div>
     </Card>
@@ -289,22 +292,24 @@ export const TargetAd2: React.FC = () => (
     {/* phrase cards */}
     <Sequence from={156} durationInFrames={134}>
       <Card enter="rise" len={134}>
-        <Words lines={["Сіздің мерекеңіздің", "сәнін келтіретін"]} size={74} delay={8} />
+        <Words lines={["Сіздің мерекеңіздің", "сәнін келтіретін"]} size={42} delay={8} />
         <div style={{ height: 8 }} />
-        <Words lines={["ерекше бонбоньерки", "ұсынамыз!"]} size={84} italic color={ACC} delay={20} />
+        <Words lines={["ерекше бонбоньерки", "ұсынамыз!"]} size={96} italic delay={20} />
       </Card>
     </Sequence>
     <Sequence from={304} durationInFrames={96}>
       <Card enter="flip" len={96}>
-        <Words lines={["Әр тапсырысты сіздің", "қалауыңызға сай жеке", "дизайнмен дайындаймыз."]} size={72} delay={8} per={2} />
+        <Words lines={["Әр тапсырысты сіздің", "қалауыңызға сай"]} size={42} delay={8} per={2} />
+        <div style={{ height: 8 }} />
+        <Words lines={["жеке дизайнмен", "дайындаймыз."]} size={96} italic delay={18} />
       </Card>
     </Sequence>
     <Sequence from={402} durationInFrames={142}><BeatTags len={142} /></Sequence>
     <Sequence from={552} durationInFrames={134}>
       <Card enter="slide" len={134}>
-        <Words lines={["Әрбір бұйымды", "үлкен ықыласпен,"]} size={76} delay={10} />
+        <Words lines={["Әрбір бұйымды", "үлкен ықыласпен,"]} size={42} delay={10} />
         <div style={{ height: 8 }} />
-        <Words lines={["әрбір бөлшегіне", "мән беріп жасаймыз."]} size={80} italic color={ACC} delay={22} />
+        <Words lines={["әрбір бөлшегіне", "мән беріп жасаймыз."]} size={96} italic delay={22} />
       </Card>
     </Sequence>
     <Sequence from={698}><Cta /></Sequence>

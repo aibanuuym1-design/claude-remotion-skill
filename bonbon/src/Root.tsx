@@ -1,5 +1,6 @@
 import React from "react";
 import { Composition, Series } from "remotion";
+import { AD_DURATION, Ad } from "./Ad";
 import { RealArch, RealEnd, RealHook } from "./Real";
 import { StyleArch, StyleCatalog, StyleEditorial } from "./Styles";
 
@@ -9,6 +10,7 @@ export const Root: React.FC = () => (
     <Composition id="StyleA-Arch" component={StyleArch} {...v} />
     <Composition id="StyleB-Editorial" component={StyleEditorial} {...v} />
     <Composition id="StyleC-Catalog" component={StyleCatalog} {...v} />
+    <Composition id="BonbonAd30" component={Ad} {...v} durationInFrames={AD_DURATION} />
     <Composition id="Real-Hook" component={RealHook} {...v} />
     <Composition id="Real-Mirror" component={RealArch} {...v} defaultProps={{ src: "real/mirror-1.jpg", title: "Бонбоньерки", sub: "на свадьбу и қыз ұзату", tag: "ИМЕННЫЕ ЗЕРКАЛЬЦА", pos: "50% 40%" }} />
     <Composition id="Real-End" component={RealEnd} {...v} />

@@ -107,7 +107,7 @@ const Card: React.FC<{ enter: CardIn; len: number; children: React.ReactNode; wi
 
 // ───────────────────────── opening: envelope → letter ─────────────────────────
 const EW = 820, EH = 540;
-const K = 1.6; // envelope plays 1.6x faster than in v2
+const K = 2.6; // envelope plays 2.6x faster than in v2 (~2.5s in total)
 const Envelope: React.FC = () => {
   const raw = useCurrentFrame();
   const f = raw * K;
@@ -119,7 +119,7 @@ const Envelope: React.FC = () => {
   const rise = interpolate(f, [54, 84], [0, 1], { ...clamp, easing: ease.out });
   const drop = interpolate(f, [80, 104], [0, 1], { ...clamp, easing: ease.in });
   const center = interpolate(f, [82, 108], [0, 1], { ...clamp, easing: ease.inOut });
-  const zoom = interpolate(f, [160, 176], [0, 1], { ...clamp, easing: ease.in });
+  const zoom = interpolate(f, [172, 192], [0, 1], { ...clamp, easing: ease.in });
   const ex = (1080 - EW) / 2, ey = 1000;
   // letter: starts inside envelope, rises out, then moves to screen centre and grows
   const LW = 740, LH = 560;
@@ -136,7 +136,7 @@ const Envelope: React.FC = () => {
       transform: `scale(${scale}) rotate(${(1 - center) * -2}deg)`, transformOrigin: "50% 50%", zIndex: 3 }}>
       <GoldFrame delay={86 / K} inset={18} />
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", padding: 40 }}>
-        <Handwrite lines={["Тойыңызға ерекше", "бір сән қосқыңыз", "келе ме?"]} size={88} delay={40} speed={0.45} />
+        <Handwrite lines={["Тойыңызға ерекше", "бір сән қосқыңыз", "келе ме?"]} size={88} delay={28} speed={0.28} />
       </AbsoluteFill>
     </div>
   );
@@ -174,7 +174,7 @@ const Envelope: React.FC = () => {
           boxShadow: "0 4px 10px rgba(150,70,90,0.25)", color: "#F9DDE3", fontSize: 60 }}>♥</div>
       </div>}
       {drop >= 1 && letter}
-      <Sequence from={Math.round(118 / K)} durationInFrames={90}><Confetti x={540} y={720} n={80} /></Sequence>
+      <Sequence from={48} durationInFrames={90}><Confetti x={540} y={720} n={80} /></Sequence>
     </AbsoluteFill>
   );
 };
@@ -245,11 +245,11 @@ const Cta: React.FC = () => {
 
 // ───────────────────────── timeline (20s) ─────────────────────────
 const ENV_AT = 30;          // envelope starts after the 1s hook
-const ENV_LEN = 112;        // letter stays readable ~1.2s before zooming away
+const ENV_LEN = 76;         // letter readable ~1s, then zooms away
 const SHOTS: ShotDef[] = [
   // 0–1s hook: bright, colourful bonbonnieres, sharp from frame 0
   { at: 0, len: 36, enter: "cut", video: "w9688", start: 5.2, rate: 0.6, from: 1.22, to: 1.04, origin: "50% 45%" },
-  { at: 126, len: 44, enter: "open", video: "w9088", start: 1.0, rate: 0.5, from: 1.12, to: 1.02, origin: "35% 55%" },
+  { at: 96, len: 74, enter: "open", video: "w9088", start: 1.0, rate: 0.5, from: 1.12, to: 1.02, origin: "35% 55%" },
   { at: 170, len: 60, enter: "slice", video: "w9253", start: 0.4, rate: 0.6, from: 1.1, to: 1.03, origin: "50% 40%" },
   { at: 230, len: 70, enter: "flash", video: "w9529", start: 0.3, rate: 0.6, from: 1.04, to: 1.14, origin: "45% 45%" },
   { at: 300, len: 20, enter: "cut", video: "w9173", start: 1.2, rate: 0.6, from: 1.14, to: 1.08 },
@@ -271,7 +271,7 @@ const Sound: React.FC = () => {
       <Audio src={staticFile("audio/air.wav")} volume={0.05} />
       {sh(0, 0.18)}{sw(22, 0.2)}
       {[0, 38, 56, 82, 130].map((a) => sw(ENV_AT + Math.round(a / K), 0.2))}
-      {sh(ENV_AT + 20, 0.2)}{sh(ENV_AT + 72)}
+      {sh(ENV_AT + 12, 0.2)}{sh(ENV_AT + 46)}
       {SHOTS.filter((s) => ["slice", "whip", "spin"].includes(s.enter)).map((s) => sw(s.at - OVER + 2))}
       {[300, 320, 340].map((a) => sw(a - 2, 0.12))}
       {sh(516)}{sh(560, 0.18)}
@@ -293,11 +293,11 @@ export const TargetAd3: React.FC = () => (
     <Sequence from={20} durationInFrames={26}><Flash /></Sequence>
     <Grain />
     {[2, 180, 432, 524].map((at) => <Sequence key={`swp${at}`} from={at} durationInFrames={34}><Sweep /></Sequence>)}
-    <Sequence from={126} durationInFrames={474}><Sparkles n={14} /></Sequence>
+    <Sequence from={96} durationInFrames={504}><Sparkles n={14} /></Sequence>
 
     {/* phrase cards — all inside the Reels safe zone (y 270…1250) */}
-    <Sequence from={136} durationInFrames={92}>
-      <Card enter="rise" len={92}>
+    <Sequence from={106} durationInFrames={122}>
+      <Card enter="rise" len={122}>
         <Words lines={["Сіздің мерекеңіздің", "сәнін келтіретін"]} size={34} delay={4} per={2} />
         <div style={{ height: 8 }} />
         <Words lines={["ерекше бонбоньерки", "ұсынамыз!"]} size={72} italic delay={12} per={2} />

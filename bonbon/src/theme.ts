@@ -31,6 +31,12 @@ export const fonts = {
   raleway: "'Raleway', sans-serif",
 };
 
+// Chosen typography for the Kazakh ad: Asylbek script + Forum (client picked option 1).
+export const kzType = {
+  script: "'Asylbek Shelley', 'Cormorant Garamond', serif",
+  serif: "'Forum', serif",
+};
+
 // Three calm palettes — one per style sample.
 export const palettes = {
   champagne: { bg: "#F5EFE6", bgAlt: "#EDE3D4", ink: "#3B3128", inkDim: "#8A7B6B", hero: "#B8955A", tint: "#D9C3A0" },

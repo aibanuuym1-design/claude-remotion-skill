@@ -274,7 +274,7 @@ const Grain: React.FC = () => {
 };
 
 // ================= composition =================
-export const Reel: React.FC<{ variant: Variant }> = ({ variant }) => {
+export const Reel: React.FC<{ variant: Variant; music?: boolean }> = ({ variant, music = true }) => {
   const f = useCurrentFrame();
   const t = f / FPS;
   const night = interpolate(t, [23.9, 24.4, 28.1, 28.3], [0, 1, 1, 0], C);
@@ -292,7 +292,7 @@ export const Reel: React.FC<{ variant: Variant }> = ({ variant }) => {
       {seq(23.95, 28.2, <Fire dur={fr(4.25)} />)}
       {BEATS.map((b, i) => seq(b.from, b.to, <Keyword {...b} v={variant} night={night} />, i))}
       <Flash />
-      <Audio src={staticFile("music/bed.wav")} volume={(fq) => MUSIC_VOL * interpolate(fq, [0, 3, 870, 889], [0, 1, 1, 0], C)} />
+      {music && <Audio src={staticFile("music/bed.wav")} volume={(fq) => MUSIC_VOL * interpolate(fq, [0, 3, 870, 889], [0, 1, 1, 0], C)} />}
       <Grain />
       {SFX.map(([s, file, vol], i) => (
         <Sequence key={`a${i}`} from={fr(s)}><Audio src={staticFile(`sfx/${file}.wav`)} volume={vol} /></Sequence>

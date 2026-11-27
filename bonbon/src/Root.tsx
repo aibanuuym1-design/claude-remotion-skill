@@ -3,6 +3,7 @@ import { Composition, Series } from "remotion";
 import { KzPair } from "./KzTest";
 import { FontSample } from "./FontSamples";
 import { FontSystem } from "./FontSystems";
+import { TARGET3_DURATION, TargetAd3 } from "./TargetAd3";
 import { TARGET2_DURATION, TargetAd2 } from "./TargetAd2";
 import { TARGET_DURATION, TargetAd } from "./TargetAd";
 import { TgStyleArch, TgStyleCinema, TgStyleRhythm } from "./Target";
@@ -31,6 +32,7 @@ export const Root: React.FC = () => (
     {(["a", "b", "c", "d", "e", "f", "g"] as const).map((k) => (
       <Composition key={k} id={`Sys-${k}`} component={FontSystem} {...v} durationInFrames={1} defaultProps={{ sys: k }} />
     ))}
+    <Composition id="TargetAdKz20s" component={TargetAd3} {...v} durationInFrames={TARGET3_DURATION} />
     <Composition id="TargetAdKz2" component={TargetAd2} {...v} durationInFrames={TARGET2_DURATION} />
     <Composition id="TargetAdKz2-Sfx" component={TargetAd2} {...v} durationInFrames={TARGET2_DURATION} defaultProps={{ music: false }} />
     <Composition id="TargetAdKz" component={TargetAd} {...v} durationInFrames={TARGET_DURATION} />

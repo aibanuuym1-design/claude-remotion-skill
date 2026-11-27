@@ -12,7 +12,8 @@ if (typeof document !== "undefined" && !document.getElementById("bonbon-fonts"))
   const h = delayRender("local fonts");
   const faces = ["400 20px 'Cormorant Garamond'", "500 20px 'Cormorant Garamond'", "italic 400 20px 'Cormorant Garamond'",
     "italic 500 20px 'Cormorant Garamond'", "400 20px 'Playfair Display'", "italic 400 20px 'Playfair Display'",
-    "400 20px 'Manrope'", "500 20px 'Manrope'", "400 20px 'Bad Script'", "400 20px 'Asylbek Shelley'"];
+    "400 20px 'Manrope'", "500 20px 'Manrope'", "400 20px 'Bad Script'", "400 20px 'Asylbek Shelley'",
+    "400 20px 'Forum'", "400 20px 'Prata'", "300 20px 'Raleway'", "400 20px 'Raleway'"];
   Promise.all(faces.map((f) => document.fonts.load(f, "Бб Aa әғқңөұүі"))).then(() => continueRender(h), () => continueRender(h));
 }
 
@@ -24,6 +25,10 @@ export const fonts = {
   script: "'Bad Script', cursive",
   // client-supplied Kazakh script font; it lacks … and — , which fall back to Cormorant
   asylbek: "'Asylbek Shelley', 'Cormorant Garamond', serif",
+  // pairing candidates for Asylbek (all with full Kazakh glyphs)
+  forum: "'Forum', serif",
+  prata: "'Prata', serif",
+  raleway: "'Raleway', sans-serif",
 };
 
 // Three calm palettes — one per style sample.

@@ -1,6 +1,6 @@
 import React from "react";
 import { Composition, Series } from "remotion";
-import { KzTest } from "./KzTest";
+import { KzPair } from "./KzTest";
 import { AD_DURATION, Ad } from "./Ad";
 import { RealArch, RealEnd, RealHook } from "./Real";
 import { StyleArch, StyleCatalog, StyleEditorial } from "./Styles";
@@ -11,7 +11,9 @@ export const Root: React.FC = () => (
     <Composition id="StyleA-Arch" component={StyleArch} {...v} />
     <Composition id="StyleB-Editorial" component={StyleEditorial} {...v} />
     <Composition id="StyleC-Catalog" component={StyleCatalog} {...v} />
-    <Composition id="KzTest" component={KzTest} {...v} durationInFrames={1} />
+    <Composition id="KzPair-Forum" component={KzPair} {...v} durationInFrames={1} defaultProps={{ pair: "forum" as const }} />
+    <Composition id="KzPair-Prata" component={KzPair} {...v} durationInFrames={1} defaultProps={{ pair: "prata" as const }} />
+    <Composition id="KzPair-Raleway" component={KzPair} {...v} durationInFrames={1} defaultProps={{ pair: "raleway" as const }} />
     <Composition id="BonbonAd30" component={Ad} {...v} durationInFrames={AD_DURATION} />
     <Composition id="Real-Hook" component={RealHook} {...v} />
     <Composition id="Real-Mirror" component={RealArch} {...v} defaultProps={{ src: "real/mirror-1.jpg", title: "Бонбоньерки", sub: "на свадьбу и қыз ұзату", tag: "ИМЕННЫЕ ЗЕРКАЛЬЦА", pos: "50% 40%" }} />

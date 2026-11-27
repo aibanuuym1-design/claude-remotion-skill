@@ -1,6 +1,7 @@
 import React from "react";
 import { Composition, Series } from "remotion";
 import { KzPair } from "./KzTest";
+import { AdKz, KZ_DURATION } from "./AdKz";
 import { AD_DURATION, Ad } from "./Ad";
 import { RealArch, RealEnd, RealHook } from "./Real";
 import { StyleArch, StyleCatalog, StyleEditorial } from "./Styles";
@@ -14,6 +15,7 @@ export const Root: React.FC = () => (
     <Composition id="KzPair-Forum" component={KzPair} {...v} durationInFrames={1} defaultProps={{ pair: "forum" as const }} />
     <Composition id="KzPair-Prata" component={KzPair} {...v} durationInFrames={1} defaultProps={{ pair: "prata" as const }} />
     <Composition id="KzPair-Raleway" component={KzPair} {...v} durationInFrames={1} defaultProps={{ pair: "raleway" as const }} />
+    <Composition id="BonbonAdKz30" component={AdKz} {...v} durationInFrames={KZ_DURATION} />
     <Composition id="BonbonAd30" component={Ad} {...v} durationInFrames={AD_DURATION} />
     <Composition id="Real-Hook" component={RealHook} {...v} />
     <Composition id="Real-Mirror" component={RealArch} {...v} defaultProps={{ src: "real/mirror-1.jpg", title: "Бонбоньерки", sub: "на свадьбу и қыз ұзату", tag: "ИМЕННЫЕ ЗЕРКАЛЬЦА", pos: "50% 40%" }} />

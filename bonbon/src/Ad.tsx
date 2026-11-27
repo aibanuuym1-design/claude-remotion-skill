@@ -67,7 +67,7 @@ const Line: React.FC<{ delay?: number; width?: number; exitAt?: number }> = ({ d
 
 // ───────────────────────── camera ─────────────────────────
 // Still photo with a slow "macro" camera move: scale + drift around a focal point.
-const Shot: React.FC<{ src: string; from: number; to: number; origin: string; dx?: number; dy?: number }> =
+export const Shot: React.FC<{ src: string; from: number; to: number; origin: string; dx?: number; dy?: number }> =
 ({ src, from, to, origin, dx = 0, dy = 0 }) => {
   const f = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
@@ -82,7 +82,7 @@ const Shot: React.FC<{ src: string; from: number; to: number; origin: string; dx
 };
 
 // Real footage, slowed down, with a gentle push-in.
-const Clip: React.FC<{ src: string; start: number; rate: number; from?: number; to?: number; origin?: string }> =
+export const Clip: React.FC<{ src: string; start: number; rate: number; from?: number; to?: number; origin?: string }> =
 ({ src, start, rate, from = 1.12, to = 1.2, origin = "50% 50%" }) => {
   const f = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
@@ -97,7 +97,7 @@ const Clip: React.FC<{ src: string; start: number; rate: number; from?: number; 
 };
 
 // Warm sunlight leak drifting across the frame.
-const LightLeak: React.FC<{ strength?: number }> = ({ strength = 0.35 }) => {
+export const LightLeak: React.FC<{ strength?: number }> = ({ strength = 0.35 }) => {
   const f = useCurrentFrame();
   const x = interpolate(f, [0, 200], [-20, 70], clamp);
   return <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "screen", opacity: strength,
@@ -105,13 +105,13 @@ const LightLeak: React.FC<{ strength?: number }> = ({ strength = 0.35 }) => {
 };
 
 // Ivory veil behind text — light, never a dark shadow.
-const Veil: React.FC<{ side: "top" | "bottom"; reach?: number }> = ({ side, reach = 46 }) => (
+export const Veil: React.FC<{ side: "top" | "bottom"; reach?: number }> = ({ side, reach = 46 }) => (
   <AbsoluteFill style={{ pointerEvents: "none", background: side === "bottom"
     ? `linear-gradient(0deg, ${p.bg}F7 0%, ${p.bg}EE ${reach * 0.62}%, ${p.bg}99 ${reach * 0.82}%, transparent ${reach}%)`
     : `linear-gradient(180deg, ${p.bg}F7 0%, ${p.bg}EE ${reach * 0.62}%, ${p.bg}99 ${reach * 0.82}%, transparent ${reach}%)` }} />
 );
 
-const Finish: React.FC = () => (
+export const Finish: React.FC = () => (
   <>
     <AbsoluteFill style={{ pointerEvents: "none", backgroundColor: p.tint, mixBlendMode: "soft-light", opacity: 0.25 }} />
     <Grain />
@@ -119,7 +119,7 @@ const Finish: React.FC = () => (
 );
 
 // Inner cross-dissolve between shots of one scene.
-const Shots: React.FC<{ items: [number, React.ReactNode][] }> = ({ items }) => (
+export const Shots: React.FC<{ items: [number, React.ReactNode][] }> = ({ items }) => (
   <TransitionSeries>
     {items.flatMap(([d, node], i) => {
       const seq = <TransitionSeries.Sequence key={`s${i}`} durationInFrames={d}>{node}</TransitionSeries.Sequence>;
@@ -207,7 +207,7 @@ const S4: React.FC = () => (
 );
 
 // 5 · Presentation — finished pieces laid out like a lookbook.
-const Frame: React.FC<{ src: string; w: number; h: number; x: number; y: number; delay: number; rot?: number;
+export const Frame: React.FC<{ src: string; w: number; h: number; x: number; y: number; delay: number; rot?: number;
   arch?: boolean; origin?: string }> = ({ src, w, h, x, y, delay, rot = 0, arch, origin = "50% 50%" }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
